@@ -3,6 +3,8 @@ import Footer from '@components/Footer';
 import logo from '@images/logo.png';
 import {Route, Routes} from "react-router-dom";
 import {HomePage} from "@/src/pages/HomePage.jsx";
+import {Layout} from "@components/Layout.jsx";
+import {Login} from "@/src/pages/Login.jsx";
 
 const features = [
   {
@@ -20,9 +22,11 @@ const features = [
 ];
 
 const App = () => (
-    <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/test' element={<HomePage />} />
+    <Routes >
+        <Route path="/" element={<Layout />}>
+            <Route index element={<HomePage />} />
+        </Route>
+        <Route path="/auth/login" element={<Login />}/>
     </Routes>
 );
 
