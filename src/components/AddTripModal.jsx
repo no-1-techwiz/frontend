@@ -14,7 +14,7 @@ import {generateUUID} from "@/src/libs/utils.js";
 import {useNavigate} from "react-router-dom";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 
-export const AddTripModal = () => {
+export const AddTripModal = ({children}) => {
     const [date, setDate] = useState()
     const [place, setPlace] = useState('')
     const navigate = useNavigate()
@@ -41,7 +41,10 @@ export const AddTripModal = () => {
     }
 
     return (<div><Dialog>
-        <DialogTrigger><Button>Start</Button></DialogTrigger>
+        <DialogTrigger>
+
+            {children}
+        </DialogTrigger>
         <DialogContent>
             <DialogHeader>
                 <DialogTitle className="text-center text-2xl font-semibold">Plan a new trip</DialogTitle>
