@@ -12,20 +12,22 @@ import {Calendar} from "@components/ui/calendar.jsx";
 
 export const AddTripModal = () => {
     const [date, setDate] = useState()
+    const [place, setPlace] = useState('')
+
     return (<div>
         <Dialog>
                 <DialogTrigger><Button>Start</Button></DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
-                        <DialogTitle>Plan a new trip</DialogTitle>
+                        <DialogTitle className="text-center text-2xl font-semibold">Plan a new trip</DialogTitle>
                         <DialogDescription>
                             <div className="flex flex-col gap-3">
                                 <div>
-                                    <p>Where to: </p>
-                                    <Input plaaceholder="Enter placement..."/>
+                                    <p className="mb-2">Where to: </p>
+                                    <Input placeholder="Enter placement..."/>
                                 </div>
                                 <div>
-                                    <p>Dates: </p>
+                                    <p className="mb-2">Dates: </p>
                                     <div className={cn("grid gap-2 w-full")}>
                                         <Popover>
                                             <PopoverTrigger asChild>
@@ -33,7 +35,7 @@ export const AddTripModal = () => {
                                                     id="date"
                                                     variant={"outline"}
                                                     className={cn(
-                                                        "w-[300px] justify-start text-left font-normal",
+                                                        "justify-start text-left font-normal",
                                                         !date && "text-muted-foreground"
                                                     )}
                                                 >
@@ -68,6 +70,10 @@ export const AddTripModal = () => {
                             </div>
                         </DialogDescription>
                     </DialogHeader>
+
+                    <div className="text-center mt-3">
+                        <Button className="">Start planning</Button>
+                    </div>
                 </DialogContent>
             </Dialog>
         </div>)
