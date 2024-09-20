@@ -4,6 +4,7 @@ import logo from '@images/logo.png';
 import { Route, Routes } from "react-router-dom";
 import { HomePage } from "@/src/pages/HomePage.jsx";
 import { ContactPage } from './pages/ContactPage';
+import { AboutPage } from './pages/AboutPage';
 
 const features = [
   {
@@ -24,6 +25,7 @@ const App = () => (
   <Routes>
     <Route path='/' element={<HomePage />} />
     <Route path='/contact' element={<ContactPage />} />
+    <Route path='/about' element={<AboutPage />} />
   </Routes>
 );
 
