@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useState, useCallback, useEffect} from "react";
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 import {TripSide} from "@components/TripSide.jsx";
@@ -17,6 +17,7 @@ import {
 import {
     Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue
 } from "@components/ui/select.jsx";
+import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 
 /*
 trip {
@@ -38,9 +39,11 @@ export const TripDetail = () => {
     const [openBudget, setOpenBudget] = useState(false)
     const [budgetVal, setBudgetVal] = useState('')
     const [currencyVal, setCurrencyVal] = useState('$')
-
+    const {loggined} = useLoggined()
+    const navigate = useNavigate()
     useEffect(() => {
         const getTrip = () => {
+            !loggined && navigate('/auth/login')
             const currentTrip = JSON.parse(localStorage.getItem(`trip:${id}`))
             console.log(currentTrip)
             setTrip(currentTrip)
