@@ -6,6 +6,7 @@ import {HomePage} from "@/src/pages/HomePage.jsx";
 import {Layout} from "@components/Layout.jsx";
 import {Login} from "@/src/pages/Login.jsx";
 import { ProfilePage } from './pages/ProfilePage';
+import {TripDetail} from "@/src/pages/TripDetail.jsx";
 
 const features = [
   {
@@ -29,6 +30,7 @@ const App = () => (
         </Route>
         <Route path="/auth/login" element={<Login />}/>
       <Route path='/profile' element={<ProfilePage />} />
+      <Route path='/trip/:id' element={<TripDetail />} />
     </Routes>
 );
 

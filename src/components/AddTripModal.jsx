@@ -9,10 +9,32 @@ import {CalendarIcon} from "lucide-react";
 import { format } from "date-fns"
 import {cn} from "@/lib/utils.js";
 import {Calendar} from "@components/ui/calendar.jsx";
+import {toast} from "react-toastify";
+import {generateUUID} from "@/src/libs/utils.js";
+import {useNavigate} from "react-router-dom";
 
 export const AddTripModal = () => {
     const [date, setDate] = useState()
     const [place, setPlace] = useState('')
+    const navigate = useNavigate()
+    const handleSubmit = () =>{
+        if(!place || !date) {
+            toast("Please fill all fields",{type:"error"})
+            return
+        }
+        console.log(date, place)
+        const id = generateUUID()
+        const newTrip = {
+            id,
+            place,
+            startDate: date.from,
+            endDate: date.to
+        }
+
+        localStorage.setItem(`trip:${id}`, JSON.stringify(newTrip))
+        toast("Trip added", {type: "success"})
+        navigate(`trip/${id}`)
+    }
 
     return (<div>
         <Dialog>
@@ -24,7 +46,7 @@ export const AddTripModal = () => {
                             <div className="flex flex-col gap-3">
                                 <div>
                                     <p className="mb-2">Where to: </p>
-                                    <Input placeholder="Enter placement..."/>
+                                    <Input value={place} onChange={(e) => setPlace(e.target.value)} placeholder="Enter placement..."/>
                                 </div>
                                 <div>
                                     <p className="mb-2">Dates: </p>
@@ -72,7 +94,7 @@ export const AddTripModal = () => {
                     </DialogHeader>
 
                     <div className="text-center mt-3">
-                        <Button className="">Start planning</Button>
+                        <Button onClick={handleSubmit} className="">Start planning</Button>
                     </div>
                 </DialogContent>
             </Dialog>
