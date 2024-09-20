@@ -43,7 +43,6 @@ export const TripDetail = () => {
     const navigate = useNavigate()
     useEffect(() => {
         const getTrip = () => {
-            !loggined && navigate('/auth/login')
             const currentTrip = JSON.parse(localStorage.getItem(`trip:${id}`))
             console.log(currentTrip)
             setTrip(currentTrip)

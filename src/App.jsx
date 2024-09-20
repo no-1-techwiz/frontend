@@ -7,6 +7,8 @@ import {Layout} from "@components/Layout.jsx";
 import {Login} from "@/src/pages/Login.jsx";
 import { ProfilePage } from './pages/ProfilePage';
 import {TripDetail} from "@/src/pages/TripDetail.jsx";
+import { ContactPage } from './pages/ContactPage';
+import { AboutPage } from './pages/AboutPage';
 
 const features = [
   {
@@ -31,6 +33,8 @@ const App = () => (
         <Route path="/auth/login" element={<Login />}/>
       <Route path='/profile' element={<ProfilePage />} />
       <Route path='/trip/:id' element={<TripDetail />} />
+        <Route path='/contact' element={<ContactPage />} />
+        <Route path='/about' element={<AboutPage />} />
     </Routes>
 );
 
