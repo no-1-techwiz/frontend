@@ -51,7 +51,10 @@ export const Layout = ({children}) => {
                             <DropdownMenuItem>Profile</DropdownMenuItem>
                             <DropdownMenuItem>Billing</DropdownMenuItem>
                             <DropdownMenuItem>Team</DropdownMenuItem>
-                            <DropdownMenuItem>Subscription</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => {
+                                localStorage.removeItem("accessToken")
+                                navigate("/auth/login")
+                            }}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                     : <Button onClick={() => navigate("/auth/login")}>Login</Button>
