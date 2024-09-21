@@ -8,7 +8,7 @@ import {
 } from "@components/ui/dropdown-menu"
 import {toCapitalize} from "@/src/libs/utils.js";
 
-const menu = ['home', 'about', 'contact']
+const menu = ['home', 'about', 'contact', 'library']
 
 export const Layout = ({children}) => {
 
@@ -18,13 +18,14 @@ export const Layout = ({children}) => {
     return <div className="flex flex-col justify-center items-center">
         <header className="w-[1200px] flex items-center rounded-2xl justify-between py-2">
             <div className="flex items-center gap-8">
-                <div className="flex items-center gap-1 cursor-pointer">
+                <div onClick={() => navigate('/')} className="flex items-center gap-1 cursor-pointer">
                     <img className="w-[40px] h-[40px]" src="https://wanderlog.com/assets/logo.png" alt=""/>
                     <h1 className="text-red-500 font-semibold">Wanderlog</h1>
                 </div>
                 {menu.map(item => {
                     return <div>
-                        <a className="no-underline hover:underline underline-offset-8 text-black font-bold decoration-2 decoration-red-400" href={`/${item}`}>{toCapitalize(item)}</a>
+                        <a className="no-underline hover:underline underline-offset-8 text-black font-bold decoration-2 decoration-red-400"
+                           href={`/${item}`}>{toCapitalize(item)}</a>
                     </div>
                 })}
             </div>
@@ -38,8 +39,7 @@ export const Layout = ({children}) => {
                     <Bell/>
                 </div>
                 <div>
-                    {loggined ?
-                    <DropdownMenu>
+                    {loggined ? <DropdownMenu>
                         <DropdownMenuTrigger>
                             <img className="cursor-pointer rounded-full w-[40px] h-[40px] object-cover"
                                  src={user.img || "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/profilePicture/wIO396WUKEh5Hs81"}
@@ -56,9 +56,7 @@ export const Layout = ({children}) => {
                                 navigate("/auth/login")
                             }}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
-                    </DropdownMenu>
-                    : <Button onClick={() => navigate("/auth/login")}>Login</Button>
-                    }
+                    </DropdownMenu> : <Button onClick={() => navigate("/auth/login")}>Login</Button>}
                 </div>
             </div>
         </header>

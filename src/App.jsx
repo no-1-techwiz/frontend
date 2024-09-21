@@ -10,6 +10,7 @@ import {TripDetail} from "@/src/pages/TripDetail.jsx";
 import { ContactPage } from './pages/ContactPage';
 import { AboutPage } from './pages/AboutPage';
 import { Admin } from './pages/admin/Admin';
+import {LibraryPage} from "@/src/pages/LibraryPage.jsx";
 
 const features = [
   {
@@ -30,13 +31,15 @@ const App = () => (
     <Routes >
         <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/library" element={<LibraryPage />} />
             <Route path='/profile/:username' element={<ProfilePage />} />
+        <Route path='/contact' element={<ContactPage />} />
+            <Route path='/about' element={<AboutPage/>}/>
         </Route>
         <Route path="/auth/login" element={<Login />}/>
       <Route path='/trip/:id' element={<TripDetail />} />
-        <Route path='/contact' element={<ContactPage />} />
-        <Route path='/about' element={<AboutPage />} />
-      
+
       <Route path='/admin/' element={<Admin/>}/>
     </Routes>
 );

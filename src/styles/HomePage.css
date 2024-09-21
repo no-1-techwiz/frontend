@@ -108,6 +108,7 @@
 }
 
 .avatar-comment {
+    object-fit: cover;
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -115,8 +116,8 @@
 
 .avatar-comment img {
     margin-right: 10px;
-    width: 40px;
-    height: 40px;
+    width: 40px !important;
+    height: 40px !important;
     border-radius: 100px;
 }
 
