@@ -18,6 +18,8 @@ import {
     Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue
 } from "@components/ui/select.jsx";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
+import axios from "axios";
+import {BASE_URL} from "@/lib/consts.js";
 
 /*
 trip {
@@ -42,7 +44,8 @@ export const TripDetail = () => {
     const {loggined} = useLoggined()
     const navigate = useNavigate()
     useEffect(() => {
-        const getTrip = () => {
+        const getTrip = async () => {
+            // const currentTrip = (await axios.get(`${BASE_URL}/trips/${id}`)).data
             const currentTrip = JSON.parse(localStorage.getItem(`trip:${id}`))
             console.log(currentTrip)
             setTrip(currentTrip)
@@ -64,14 +67,15 @@ export const TripDetail = () => {
                 <div className="w-full relative" id="overview">
                     <img className="w-full h-[250px] object-cover object-center"
                          src="https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/HPsJUyz4sfWmWXZ0134FKFzrGVq0xhYQ"
-                         alt=""/>
+                         alt=""
+                    />
                     <div className="absolute bottom-[-30px] left-[50%] p-[30px] bg-white min-w-[400px] rounded-xl"
                          style={{transform: "translateX(-50%)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px"}}>
                         {!isEditTitle ? <div className="flex gap-2 items-center">
-                            <p className="text-3xl font-semibold">Trip to {trip.place}</p>
+                            <p className="text-3xl font-semibold">Trip to {trip.trip_name}</p>
                             <Button size="icon" variant="ghost" onClick={() => setIsEditTitle(true)}><PenLine
                                 size={20}/></Button>
-                        </div> : <Input defaultValue={trip.place} onKeyDown={(e) => {
+                        </div> : <Input defaultValue={trip.trip_name} onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 console.log('do validate');
                                 handleSetTrip({...trip, place: e.target.value})
@@ -89,20 +93,20 @@ export const TripDetail = () => {
                                         className={cn("justify-start text-left font-normal", !trip && "text-muted-foreground")}
                                     >
                                         <CalendarIcon className="mr-2 h-4 w-4"/>
-                                        {trip?.startDate ? (trip.endDate ? (<>
-                                            {format(trip.startDate, "LLL dd, y")} -{" "}
-                                            {format(trip.endDate, "LLL dd, y")}
-                                        </>) : (format(trip.startDate, "LLL dd, y"))) : (<span>Pick a date</span>)}
+                                        {trip?.start_date ? (trip.end_date ? (<>
+                                            {format(trip.start_date, "LLL dd, y")} -{" "}
+                                            {format(trip.end_date, "LLL dd, y")}
+                                        </>) : (format(trip.start_date, "LLL dd, y"))) : (<span>Pick a date</span>)}
                                     </Button>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-auto p-0" align="start">
                                     <Calendar
                                         initialFocus
                                         mode="range"
-                                        defaultMonth={trip?.startDate}
-                                        selected={{from: trip.startDate, to: trip.endDate}}
+                                        defaultMonth={trip?.start_date}
+                                        selected={{from: trip.start_date, to: trip.end_date}}
                                         onSelect={({from, to}) => {
-                                            handleSetTrip({...trip, startDate: from, endDate: to})
+                                            handleSetTrip({...trip, start_date: from, end_date: to})
                                         }}
                                         numberOfMonths={2}
                                     />
@@ -111,7 +115,7 @@ export const TripDetail = () => {
                         </div>
                     </div>
                 </div>
-                <div className="px-16">
+                <div className="px-16 py-5">
                     <div className="flex flex-col gap-2 mt-10" id="note">
                         <p className="font-bold text-2xl">Note:</p>
                         <div>

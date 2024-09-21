@@ -2,17 +2,19 @@ import {Sparkles} from "lucide-react";
 import {Button} from "@components/ui/button.jsx";
 import {useState} from "react";
 import {toCapitalize} from "@/src/libs/utils.js";
+import {useNavigate} from "react-router-dom";
 
 const listMenu = ['overview','note', 'budget' ]
 
 export const TripSide = ({children}) => {
 
     const [selected, setSelected] = useState(listMenu[0])
+    const navigate  = useNavigate()
 
     return <div className="w-full  h-[100dvh]">
         <div className="flex gap-3 border-b-2 py-2">
             <div className="flex items-center gap-1 cursor-pointer pl-[150px]">
-                <img className="w-[30px] h-[30px]" src="https://wanderlog.com/assets/logo.png" alt=""/>
+                <img onClick={() => navigate(`/`)} className="w-[30px] h-[30px]" src="https://wanderlog.com/assets/logo.png" alt=""/>
                 {/*<h1 className="text-red-500 font-semibold">Wanderlog</h1>*/}
             </div>
         </div>

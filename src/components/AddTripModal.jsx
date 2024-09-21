@@ -10,9 +10,11 @@ import {Calendar} from "@components/ui/calendar.jsx";
 import {format} from "date-fns"
 import {cn} from "@/lib/utils.js";
 import {toast} from "react-toastify";
-import {generateUUID} from "@/src/libs/utils.js";
+import {convertDate, generateUUID} from "@/src/libs/utils.js";
 import {useNavigate} from "react-router-dom";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
+import axios from "axios";
+import {BASE_URL} from "@/lib/consts.js";
 
 export const AddTripModal = ({children}) => {
     const [date, setDate] = useState()
@@ -20,24 +22,34 @@ export const AddTripModal = ({children}) => {
     const navigate = useNavigate()
     const {loggined} = useLoggined()
 
-    const handleSubmit = () => {
-        if (!loggined) {
-            navigate('/auth/login')
-            return
-        }
-        if (!place || !date) {
-            toast("Please fill all fields", {type: "error"})
-            return
-        }
-        console.log(date, place)
-        const id = generateUUID()
-        const newTrip = {
-            id, place, startDate: date.from, endDate: date.to
-        }
+    const handleSubmit = async () => {
+        try{
+            if (!loggined) {
+                navigate('/auth/login')
+                return
+            }
+            if (!place || !date) {
+                toast("Please fill all fields", {type: "error"})
+                return
+            }
+            console.log(date, place)
+            const id = generateUUID()
+            const newTrip = {
+                id, place, startDate: date.from, endDate: date.to
+            }
+            const newTripApi = {
+                user_id:1, destination:place, trip_name:"Trip to " + place, start_date: convertDate(date.from), end_date: convertDate(date.to), budget: 0, note:"We need to add a note here",
+            }
 
-        localStorage.setItem(`trip:${id}`, JSON.stringify(newTrip))
-        toast("Trip added", {type: "success"})
-        navigate(`trip/${id}`)
+            const res = await axios.post(`${BASE_URL}/trips`, newTripApi)
+
+            localStorage.setItem(`trip:${res.data.id}`, JSON.stringify(res.data))
+            toast("Trip added", {type: "success"})
+            navigate(`trip/${res.data.id}`)
+        }catch (e) {
+            toast("Error adding trip", {type: "error"})
+
+        }
     }
 
     return (<div><Dialog>
