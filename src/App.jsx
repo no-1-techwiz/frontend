@@ -1,8 +1,16 @@
 import Feature from '@components/Feature';
 import Footer from '@components/Footer';
 import logo from '@images/logo.png';
-import {Route, Routes} from "react-router-dom";
-import {HomePage} from "@/src/pages/HomePage.jsx";
+import { Route, Routes } from "react-router-dom";
+import { HomePage } from "@/src/pages/HomePage.jsx";
+import { Layout } from "@components/Layout.jsx";
+import { Login } from "@/src/pages/Login.jsx";
+import { ProfilePage } from './pages/ProfilePage';
+import { TripDetail } from "@/src/pages/TripDetail.jsx";
+import { ContactPage } from './pages/ContactPage';
+import { AboutPage } from './pages/AboutPage';
+import { Admin } from './pages/admin/Admin';
+import { LibraryPage } from "@/src/pages/LibraryPage.jsx";
 
 const features = [
   {
@@ -20,10 +28,20 @@ const features = [
 ];
 
 const App = () => (
-    <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/test' element={<HomePage />} />
-    </Routes>
+  <Routes >
+    <Route path="/" element={<Layout />}>
+      <Route index element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/library" element={<LibraryPage />} />
+      <Route path='/profile/:username' element={<ProfilePage />} />
+      <Route path='/contact' element={<ContactPage />} />
+      <Route path='/about' element={<AboutPage />} />
+    </Route>
+    <Route path="/auth/login" element={<Login />} />
+    <Route path='/trip/:id' element={<TripDetail />} />
+
+    <Route path='/admin/' element={<Admin />} />
+  </Routes>
 );
 
 export default App;
