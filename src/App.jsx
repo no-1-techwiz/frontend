@@ -11,9 +11,9 @@ import { ContactPage } from './pages/ContactPage';
 import { AboutPage } from './pages/AboutPage';
 import { Admin } from './pages/admin/Admin';
 import {LibraryPage} from "@/src/pages/LibraryPage.jsx";
-import {ListLocation} from "@/src/pages/admin/ListLocation.jsx";
-import {DetailsLocation} from "@/src/pages/admin/DetailsLocation.jsx";
-import {ListCurrencies} from "@/src/pages/admin/ListCurrencies.jsx";
+import { ListLocation } from './pages/admin/ListLocation';
+import { DetailsLocation } from './pages/admin/DetailsLocation';
+import { ListCurrencies } from './pages/admin/ListCurrencies';
 
 const features = [
   {
@@ -47,7 +47,7 @@ const App = () => (
       <Route index element={<ListLocation/>}/>
         <Route index path='/admin/location' element={<ListLocation/>}/>
         <Route path='/admin/location/:id' element={<DetailsLocation/>}/>
-        <Route path='/admin/currency' element={<ListCurrencies/>}/>
+        <Route path='/admin/currency' element={<ListCurrencies  />}/>
       </Route>
     </Routes>
 );
