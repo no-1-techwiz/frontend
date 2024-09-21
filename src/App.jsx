@@ -11,6 +11,9 @@ import { ContactPage } from './pages/ContactPage';
 import { AboutPage } from './pages/AboutPage';
 import { Admin } from './pages/admin/Admin';
 import {LibraryPage} from "@/src/pages/LibraryPage.jsx";
+import {ListLocation} from "@/src/pages/admin/ListLocation.jsx";
+import {DetailsLocation} from "@/src/pages/admin/DetailsLocation.jsx";
+import {ListCurrencies} from "@/src/pages/admin/ListCurrencies.jsx";
 
 const features = [
   {
