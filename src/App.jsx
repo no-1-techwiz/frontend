@@ -29,9 +29,9 @@ const App = () => (
     <Routes >
         <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
+            <Route path='/profile/:username' element={<ProfilePage />} />
         </Route>
         <Route path="/auth/login" element={<Login />}/>
-      <Route path='/profile/:username' element={<ProfilePage />} />
       <Route path='/trip/:id' element={<TripDetail />} />
         <Route path='/contact' element={<ContactPage />} />
         <Route path='/about' element={<AboutPage />} />
