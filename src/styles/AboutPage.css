@@ -1,0 +1,187 @@
+.about-page {
+    width: 100%;
+}
+
+.banner-about {
+    width: 100%;
+    height: 500px;
+    background-size: cover;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Màu nền tối */
+    background-blend-mode: darken;
+    background-image: url("https://kit.sociolib.com/nextrip/wp-content/uploads/sites/12/2024/09/37.webp");
+}
+
+.text-banner-about {
+    padding-top: 200px;
+    width: 40%;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+}
+
+.text-banner-about h2 {
+    font-size: 60px;
+    font-weight: 500;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.text-banner-about p {
+    font-size: 20px;
+    padding-top: 25px;
+}
+
+.main-about {
+    width: 90%;
+    margin: 200px auto;
+}
+
+.content-main-about {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.item-main-about-1 {
+    display: flex;
+    width: 50%;
+    justify-content: space-between;
+}
+
+.item-1 {
+    width: 40%;
+}
+
+.item-1 h2 {
+    font-size: 45px;
+    line-height: 1.5;
+    font-weight: 650;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.item-1 p {
+    line-height: 2;
+    margin-top: 20px;
+}
+
+.item-1 img {
+    margin-top: 150px;
+    width: 150px;
+    height: 170px;
+}
+
+.item-2 {
+    position: relative;
+    width: 50%;
+}
+
+.item-2 img {
+    width: 100%;
+    height: 100%;
+}
+
+.item-3 {
+    position: absolute;
+    right: -20%;
+    top: 45%;
+    width: 150px;
+    height: 170px;
+}
+
+.item-main-about-2 {
+    width: 40%;
+}
+
+.list-item-about-1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-icon-about i {
+    color: #998a7a;
+    border: 2px solid #998a7a;
+    border-radius: 50%;
+    font-size: 40px;
+    width: 80px;
+    height: 80px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-list-about {
+    width: 300px;
+}
+
+.text-list-about h4 {
+    margin: 20px 0px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.text-list-about p {
+    color: gray;
+    line-height: 1.8;
+}
+
+.list-item-about-img {
+    width: 150px;
+    height: 170px;
+}
+
+.list-item-about-2 {
+    width: 100%;
+    margin: 100px auto;
+    justify-content: flex-end;
+    display: flex;
+}
+
+.comment-about {
+    width: 100%;
+    height: 700px;
+    background-size: cover;
+    background-image: url("https://kit.sociolib.com/nextrip/wp-content/uploads/sites/12/2024/09/20.webp");
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Màu nền tối */
+    background-blend-mode: darken;
+    /* Trộn màu nền với hình ảnh */
+}
+
+.main-comment-about {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-comment-about {
+    margin-top: 200px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.doc-comment-about {
+    width: 40%;
+}
+
+.doc-comment-about p {
+    color: #fff;
+    padding: 20px;
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.text-comment-about {
+    width: 100%;
+    display: flex;
+}
+
+.img-comment-about {
+    width: 30%;
+    margin: 200px auto;
+}
+
+.img-comment-about img {
+    width: 100%;
+}
