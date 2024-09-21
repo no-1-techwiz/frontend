@@ -3,7 +3,7 @@ import {useState, useCallback, useEffect, useMemo} from "react";
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 import {TripSide} from "@components/TripSide.jsx";
 import {Button} from "@components/ui/button.jsx";
-import {BetweenHorizontalEnd, CalendarIcon, Pencil, PenLine, Plus, Settings} from "lucide-react";
+import {BetweenHorizontalEnd, CalendarIcon, Pencil, PenLine, Plus, Settings, Terminal} from "lucide-react";
 import {Input} from "@components/ui/input.jsx";
 import {toast} from "react-toastify";
 import {format} from 'date-fns';
@@ -22,6 +22,7 @@ import axios from "axios";
 import {BASE_URL} from "@/lib/consts.js";
 import {Locations} from "@components/Location.jsx";
 import {imageList} from "@components/RecentlyViewed.jsx";
+import {Alert, AlertDescription, AlertTitle} from "@components/ui/alert.jsx";
 
 /*
 trip {
@@ -45,7 +46,37 @@ export const TripDetail = () => {
     const [budgetVal, setBudgetVal] = useState('')
     const [currencyVal, setCurrencyVal] = useState('$')
     const {loggined, user} = useLoggined()
+    const [total, setTotal] = useState(0)
     const navigate = useNavigate()
+
+
+    const budgetStatus = useMemo(() => {
+        if (!trip) return {
+            status: "Normal",
+            des: " The user's spending is within the allowed limit. No warnings are needed at this point.",
+            variant: "default"
+        }
+        if (total > trip.budget) {
+            return {
+                status: "Exceeded",
+                des: " The user has exceeded the defined budget limit. A more serious warning urging the user to take action to control spending.",
+                variant: "destructive"
+            }
+        }
+        if (total < trip.budget && total > trip.budget - 3) {
+            return {
+                status: "Approaching Limit",
+                des: " The user's spending is within the allowed limit. No warnings are needed at this point.",
+                variant: "secondary"
+            }
+        }
+        return {
+            status: "Normal",
+            des: " The user's spending is within the allowed limit. No warnings are needed at this point.",
+            variant: "default"
+        }
+    }, [trip, total])
+
     useEffect(() => {
         const getTrip = async () => {
             const currentTrip = (await axios.get(`${BASE_URL}/trips/${id}`)).data
@@ -119,7 +150,7 @@ export const TripDetail = () => {
                     </div>
                 </div>
                 <div className="px-16 py-5">
-                    <div className="flex flex-col gap-2 mt-10" id="note">
+                    <div className="flex flex-col gap-2 mt-16" id="note">
                         <p className="font-bold text-2xl">Note:</p>
                         <div>
                             {!isEditNote ? <div className="flex gap-2 items-center">
@@ -139,9 +170,13 @@ export const TripDetail = () => {
                                 }}/>}
                         </div>
                     </div>
+                    <div className="w-full h-[1px] bg-neutral-200 my-5"></div>
                     <div id="locations">
-                        <Locations trip={trip} user={user}/>
+                        <Locations trip={trip} user={user} setTotal={setTotal}/>
                     </div>
+                    {/*<div className="w-full h-[1px] bg-neutral-200 my-5"></div>*/}
+
+
                     <div className="flex flex-col gap-4 mt-10" id="budget">
                         <div className="flex items-center justify-between">
                             <p className="text-2xl font-bold">Budgeting</p>
@@ -152,6 +187,13 @@ export const TripDetail = () => {
                                 });
                             }}><Plus/> Add expense</Button>
                         </div>
+                        <Alert variant={budgetStatus.variant}>
+                            <Terminal className="h-4 w-4"/>
+                            <AlertTitle>{budgetStatus.status}!</AlertTitle>
+                            <AlertDescription>
+                                {budgetStatus.des}
+                            </AlertDescription>
+                        </Alert>
                         <div className="bg-neutral-100 p-6 flex justify-between items-center rounded-xl">
                             <div>
                                 <p className="text-3xl font-medium mb-4">{trip.currency || "$"}{(+trip.budget || 0).toFixed(2)}</p>
@@ -188,7 +230,9 @@ export const TripDetail = () => {
                                             </div>
                                             <div className="flex justify-center">
                                                 <Button className="px-20" onClick={() => {
-                                                    trip.budget !==  budgetVal  && handleSetTrip({...trip, budget: budgetVal, currency: currencyVal})
+                                                    trip.budget !== budgetVal && handleSetTrip({
+                                                        ...trip, budget: budgetVal, currency: currencyVal
+                                                    })
                                                     setOpenBudget(false)
                                                     toast('Budget updated')
                                                 }}>Save</Button>
@@ -203,13 +247,14 @@ export const TripDetail = () => {
                             <div className="flex gap-3 ">
                                 <div className="h-[70px] w-[2px] bg-neutral-300"></div>
                                 <div className="flex gap-1 items-center">
-                                        <Settings />
-                                    <p className="font-medium text-neutral-500 cursor-pointer">
-                                        Settings</p>
+                                    <p className="font-medium text-neutral-500">
+                                        Expenses: <span className="font-bold text-black">{total}</span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div className="w-full h-[1px] bg-neutral-200 my-5"></div>
+
                 </div>
             </TripSide>
 

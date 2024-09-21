@@ -59,13 +59,14 @@ import {
 import {
     Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger
 } from "@components/ui/dialog.jsx";
-import {Label} from "@radix-ui/react-dropdown-menu";
-import {CurrencySelector} from "@components/profile/CurrencySelector.jsx";
 import {Input} from "@components/ui/input.jsx";
 import {toast} from "react-toastify";
 import { useDebounce } from "@uidotdev/usehooks";
+import {imageList} from "@components/RecentlyViewed.jsx";
 
-export const Locations = ({trip,user}) => {
+const locationImg = ['https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/kp5QNAKQeJAT9REQlIJpPFe7U2oMOqEU','https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/d0EPJLXPz2br62LzvSQqCRRF5CVpJIen','https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/NfgVw53IRUBHfadVefJQirS1KZ7zhaKe',"https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D"]
+
+export const Locations = ({trip,user,setTotal}) => {
 
     const [location, setLocation] = useState([])
     const [openRecommend, setOpenRecommend] = useState(false)
@@ -102,6 +103,10 @@ export const Locations = ({trip,user}) => {
         console.log("notOwnedLocation", location, ownedLocation)
         return locationTemplate.filter(item1 => !ownedLocation.find(item => item.location_template_id === item1.id))
     },[location, ownedLocation,locationTemplate])
+
+    useEffect(() => {
+        setTotal(total)
+    },[total])
 
     useEffect(() => {
         fetchLocation()
@@ -164,8 +169,7 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
     const [price, setPrice]= useState(0)
     const [expense, setExpense] = useState(0)
     const [open, setOpen] = useState(false)
-
-    console.log(item)
+    const randomImg = useMemo(() => Math.floor(Math.random() * locationImg.length), [])
 
     const initFetch = async () => {
         try {
@@ -173,7 +177,8 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
             setCategory(category.data.name)
             if(isOwn) {
                 // const location = await axios.get(`${BASE_URL}/locations/${item.id}`)
-                const expense = localStorage.getItem(`price:${user.id}:${item.id}`) || 0
+                console.log("item",item)
+                const expense = localStorage.getItem(`price:${user.id}:${locationId}`)
                 console.log("expense", expense)
                 setExpense(+expense)
                 setPrice(+expense)
@@ -191,8 +196,8 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
         <div key={index}
              className="flex justify-between items-center gap-4 p-2  border-gray-200 rounded-xl overflow-hidden border-2 gap-20">
             <div className="flex gap-2 items-center">
-                <img className="w-[50px] object-cover flex-1 rounded-lg h-full"
-                     src={!item.image || "https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D"}
+                <img className="w-[50px] object-cover flex-1 rounded-lg h-[70px]"
+                     src={locationImg[randomImg]}
                      alt=""/>
                 <div className="w-[85%]">
                     <p className="font-semibold">{item.name}</p>
@@ -213,7 +218,7 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
                    <DialogTrigger asChild >
                        {isOwn ?
                            <div >
-                               <Button className="px-8" size="icon" variant="secondary" onClick={() => setPrice(expense)} >{trip.currency} {expense}</Button>
+                               <Button className="px-8" size="icon" variant="secondary" onClick={() => setPrice(expense)} >{trip.currency || "$"} {expense}</Button>
                            </div>
                            :
                            <div className="mr-5">
@@ -241,7 +246,7 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
                                <Button onClick={async () => {
                                    try {
                                        if(isOwn) {
-                                           localStorage.setItem(`price:${user.id}:${item.id}`, price.toString())
+                                           localStorage.setItem(`price:${user.id}:${locationId}`, price.toString())
                                            await initFetch()
                                            await fetch()
                                            toast("Updated location", {type: "success"})
@@ -250,7 +255,7 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
                                        }
                                        if (trip.budget < (+price + total)) {
                                            toast("Your expenses have exceeded the allowable limit.",{type:"error"})
-                                           return
+                                           // return
                                        }
 
                                        console.log({
@@ -280,6 +285,7 @@ const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) =
                {isOwn && <Button onClick={ async () => {
                    try{
                        await axios.delete(`${BASE_URL}/locations/${locationId}`)
+                       localStorage.removeItem(`price:${user.id}:${locationId}`)
                        await fetch()
                        toast("Delete success",{type:"success"})
 

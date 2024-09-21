@@ -35,7 +35,7 @@ import {Button} from "@components/ui/button.jsx";
 
 export const imageList = ["https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/HPsJUyz4sfWmWXZ0134FKFzrGVq0xhYQ", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/3e3svAf3blCKyWuPgLbeS0NI7hVF704p", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/LrbT4ax423VhdNixj8ICQkpFQvIho8SM", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/VIUrqSNzoqem2MPYfxrIHFpY17fflHmT", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/5s6tsMMA1suKm0sce1aAQxbZwE7qextR"]
 
-export const RecentlyViewed = () => {
+export const RecentlyViewed = ({isProfile}) => {
 
 
     const [trip, setTrip] = useState([])
@@ -60,12 +60,12 @@ export const RecentlyViewed = () => {
     if (!loggined) return
 
     return <div className="mt-10">
-        <div className="flex justify-between items-center mb-6">
+        {!isProfile &&  <div className="flex justify-between items-center mb-6">
             <p className="font-bold text-2xl " >Recently Viewed</p>
             <AddTripModal>
                 <Button className="px-7" >Add trip</Button>
             </AddTripModal>
-        </div>
+        </div>}
         <div className="flex gap-5">
             {trip.map((item, index) => {
                 return <TripBox item={item} index={index} user={user}/>

@@ -15,8 +15,10 @@ export const Layout = ({children}) => {
     const {loggined, loading, user} = useLoggined()
     const navigate = useNavigate()
 
-    return <div className="flex flex-col justify-center items-center">
-        <header className="w-[1200px] flex items-center rounded-2xl justify-between py-2">
+    return <div className="flex flex-col justify-center items-center ">
+        <div className="sticky top-0 z-50 bg-white w-full flex justify-center">
+
+        <header className="w-[1200px] flex items-center rounded-2xl   justify-between py-2">
             <div className="flex items-center gap-8">
                 <div onClick={() => navigate('/')} className="flex items-center gap-1 cursor-pointer">
                     <img className="w-[40px] h-[40px]" src="https://wanderlog.com/assets/logo.png" alt=""/>
@@ -31,10 +33,10 @@ export const Layout = ({children}) => {
             </div>
 
             <div className="flex gap-5 items-center">
-                <div className="relative flex items-center gap-1">
-                    <Input className="w-[270px] pl-10" type="string" placeholder="Search something..."/>
-                    <Search className="absolute left-2" size={18}/>
-                </div>
+                {/*<div className="relative flex items-center gap-1">*/}
+                {/*    /!*<Input className="w-[270px] pl-10" type="string" placeholder="Search something..."/>*!/*/}
+                {/*    <Search className="absolute left-2" size={18}/>*/}
+                {/*</div>*/}
                 <div className="cursor-pointer hover:text-red-300">
                     <Bell/>
                 </div>
@@ -48,9 +50,7 @@ export const Layout = ({children}) => {
                         <DropdownMenuContent>
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator/>
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
-                            <DropdownMenuItem>Billing</DropdownMenuItem>
-                            <DropdownMenuItem>Team</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigate(`/profile/${user.id}`)}>Profile</DropdownMenuItem>
                             <DropdownMenuItem onClick={() => {
                                 localStorage.removeItem("accessToken")
                                 navigate("/auth/login")
@@ -60,6 +60,7 @@ export const Layout = ({children}) => {
                 </div>
             </div>
         </header>
+        </div>
         {children}
         <Outlet/>
     </div>
