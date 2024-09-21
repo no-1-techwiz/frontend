@@ -20,6 +20,7 @@ import {
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import axios from "axios";
 import {BASE_URL} from "@/lib/consts.js";
+import {Locations} from "@components/Location.jsx";
 
 /*
 trip {
@@ -72,13 +73,13 @@ export const TripDetail = () => {
                     <div className="absolute bottom-[-30px] left-[50%] p-[30px] bg-white min-w-[400px] rounded-xl"
                          style={{transform: "translateX(-50%)", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px"}}>
                         {!isEditTitle ? <div className="flex gap-2 items-center">
-                            <p className="text-3xl font-semibold">Trip to {trip.trip_name}</p>
+                            <p className="text-3xl font-semibold">Trip to {trip.destination}</p>
                             <Button size="icon" variant="ghost" onClick={() => setIsEditTitle(true)}><PenLine
                                 size={20}/></Button>
                         </div> : <Input defaultValue={trip.trip_name} onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 console.log('do validate');
-                                handleSetTrip({...trip, place: e.target.value})
+                                handleSetTrip({...trip, destination: e.target.value})
                                 setIsEditTitle(false)
                                 toast('Title updated')
                             }
@@ -136,6 +137,7 @@ export const TripDetail = () => {
                                 }}/>}
                         </div>
                     </div>
+                    <Locations />
                     <div className="flex flex-col gap-4 mt-10" id="budget">
                         <div className="flex items-center justify-between">
                             <p className="text-2xl font-bold">Budgeting</p>
