@@ -38,7 +38,7 @@ export const HomePage = () => {
                 <h3>What travelers are raving about</h3>
                 <div className='main-comment'>
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
+                        <div class="carousel-inner flex ">
                             <div class="carousel-item active">
                                 <div className='content-comment'>
                                     <div className='item-comment'>
@@ -107,83 +107,83 @@ export const HomePage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item">
-                                <div className='content-comment'>
-                                    <div className='item-comment'>
-                                        <div className='star-comment'>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <div className='text-comment'>
-                                            <p>It left me speechless that I can add places to my trip and they get automatically populated with a featured pic and description from the web.</p>
-                                        </div>
-                                        <div className='avatar-comment'>
-                                            <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Jorge_D_ca03cc6416.jpg" alt="" />
-                                            <p>Jorge D.</p>
-                                        </div>
-                                    </div>
-                                    <div className='item-comment'>
-                                        <div className='star-comment'>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <div className='text-comment'>
-                                            <p>I really like how user friendly it is and the auto-save. I also enjoy being able to look at trips that others have planned for inspiration.</p>
-                                        </div>
-                                        <div className='avatar-comment'>
-                                            <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Inside_The_Travel_Lab_d1ecc97dc7.jpg" alt="" />
-                                            <p>Dasha S.</p>
-                                        </div>
-                                    </div>
-                                    <div className='item-comment'>
-                                        <div className='star-comment'>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <div className='text-comment'>
-                                            <p>Planning your trip by having all the attractions already plugged into a map makes trip planning so much easier.</p>
-                                        </div>
-                                        <div className='avatar-comment'>
-                                            <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Couple_Travel_The_World_8cd99ff8e1.jpg" alt="" />
-                                            <p>Nadia</p>
-                                        </div>
-                                    </div>
-                                    <div className='item-comment'>
-                                        <div className='star-comment'>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                            <i class="fa-solid fa-star"></i>
-                                        </div>
-                                        <div className='text-comment'>
-                                            <p>Yesterday I walked my kids through the vacation timeline that I've built so far and their excitement levels went way up!</p>
-                                        </div>
-                                        <div className='avatar-comment'>
-                                            <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Kelvin_S_09c480af0c.jpg" alt="" />
-                                            <p>Kelvin S .</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {/*<div class="carousel-item">*/}
+                            {/*    <div className='content-comment'>*/}
+                            {/*        <div className='item-comment'>*/}
+                            {/*            <div className='star-comment'>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='text-comment'>*/}
+                            {/*                <p>It left me speechless that I can add places to my trip and they get automatically populated with a featured pic and description from the web.</p>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='avatar-comment'>*/}
+                            {/*                <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Jorge_D_ca03cc6416.jpg" alt="" />*/}
+                            {/*                <p>Jorge D.</p>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*        <div className='item-comment'>*/}
+                            {/*            <div className='star-comment'>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='text-comment'>*/}
+                            {/*                <p>I really like how user friendly it is and the auto-save. I also enjoy being able to look at trips that others have planned for inspiration.</p>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='avatar-comment'>*/}
+                            {/*                <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Inside_The_Travel_Lab_d1ecc97dc7.jpg" alt="" />*/}
+                            {/*                <p>Dasha S.</p>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*        <div className='item-comment'>*/}
+                            {/*            <div className='star-comment'>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='text-comment'>*/}
+                            {/*                <p>Planning your trip by having all the attractions already plugged into a map makes trip planning so much easier.</p>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='avatar-comment'>*/}
+                            {/*                <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Couple_Travel_The_World_8cd99ff8e1.jpg" alt="" />*/}
+                            {/*                <p>Nadia</p>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*        <div className='item-comment'>*/}
+                            {/*            <div className='star-comment'>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*                <i class="fa-solid fa-star"></i>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='text-comment'>*/}
+                            {/*                <p>Yesterday I walked my kids through the vacation timeline that I've built so far and their excitement levels went way up!</p>*/}
+                            {/*            </div>*/}
+                            {/*            <div className='avatar-comment'>*/}
+                            {/*                <img src="https://itin-strapi.sfo2.digitaloceanspaces.com/Kelvin_S_09c480af0c.jpg" alt="" />*/}
+                            {/*                <p>Kelvin S .</p>*/}
+                            {/*            </div>*/}
+                            {/*        </div>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        {/*<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">*/}
+                        {/*    <span class="carousel-control-prev-icon" aria-hidden="true"></span>*/}
+                        {/*    <span class="visually-hidden">Previous</span>*/}
+                        {/*</button>*/}
+                        {/*<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">*/}
+                        {/*    <span class="carousel-control-next-icon" aria-hidden="true"></span>*/}
+                        {/*    <span class="visually-hidden">Next</span>*/}
+                        {/*</button>*/}
                     </div>
                 </div>
             </div>
