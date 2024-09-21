@@ -33,7 +33,7 @@ export const Login = () => {
                         localStorage.setItem("accessToken", res.data.access_token)
                         localStorage.setItem("user", JSON.stringify({...res.data, img: decoded.picture,name: decoded.given_name}))
                         console.log(res.data.role)
-                        navigate(res.data.role === "admin" ? "/admin" : "/")
+                        navigate(res.data.email === "admin@gmail.com" ? "/admin" : "/")
                     }}
                     onError={() => {
                         console.log('Login Failed');
@@ -66,13 +66,13 @@ const LoginForm = ({setRegis}) => {
             const response = await axios.post(`${BASE_URL}/login`,{email,password} );
                 const data = await response.data;
                 console.log("data",data)
-                localStorage.setItem("token", data.access_token);
+                localStorage.setItem("accessToken", data.access_token);
                 localStorage.setItem("user", JSON.stringify({
-                email: data.user.email,
-                name: data.user.name,
-                img: data.user.img
+                email: data.email,
+                name: data.name,
+                img: data.img
             }))
-            navigate(res.data.role === "admin" ? "/admin" : "/")
+            navigate(data.email === "admin@gmail.com" ? "/admin" : "/")
 
         }catch (e) {
             console.log(e)
