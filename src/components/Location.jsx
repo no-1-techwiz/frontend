@@ -47,50 +47,109 @@
 }
  */
 
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import axios from "axios";
 import {BASE_URL} from "@/lib/consts.js";
 import {Button} from "@components/ui/button.jsx";
-import {PlusIcon} from "lucide-react";
+import {PlusIcon, Search, Trash} from "lucide-react";
 import {Badge} from "@components/ui/badge.jsx";
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
+    Accordion, AccordionContent, AccordionItem, AccordionTrigger,
 } from "@components/ui/accordion"
+import {
+    Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger
+} from "@components/ui/dialog.jsx";
+import {Label} from "@radix-ui/react-dropdown-menu";
+import {CurrencySelector} from "@components/profile/CurrencySelector.jsx";
+import {Input} from "@components/ui/input.jsx";
+import {toast} from "react-toastify";
+import { useDebounce } from "@uidotdev/usehooks";
 
-export const Locations = ({}) => {
+export const Locations = ({trip,user}) => {
 
     const [location, setLocation] = useState([])
-    const [openRecommend,setOpenRecommend] = useState(false)
+    const [openRecommend, setOpenRecommend] = useState(false)
+    const [locationTemplate, setLocationTemplate] = useState([])
+    const [searchVal, setSearchVal] = useState('')
+    const [locationSearch, setLocationSearch] = useState([])
+    const debouncedSearchTerm = useDebounce(searchVal, 300);
+
+    const total = useMemo(() => {
+        let cost = 0
+        location.forEach(item => {
+            const price = localStorage.getItem(`price:${user.id}:${item.id}`)
+            cost += price ? Number(price) : 0
+        })
+
+        return cost
+    }, [location])
+
+    const fetchLocation = async () => {
+        try {
+            const locationTemplate = await axios.get(`${BASE_URL}/location-templates`)
+            const location = await axios.get(`${BASE_URL}/locations`)
+            setLocationTemplate(locationTemplate.data)
+            setLocation(location.data)
+        } catch (e) {
+
+        }
+    }
+
+    const ownedLocation = useMemo(() => {
+        return location.filter(item => item.trip_id === trip.id)
+    },[location])
+    const notOwnedLocation = useMemo(() => {
+        console.log("notOwnedLocation", location, ownedLocation)
+        return locationTemplate.filter(item1 => !ownedLocation.find(item => item.location_template_id === item1.id))
+    },[location, ownedLocation,locationTemplate])
 
     useEffect(() => {
-        (async () => {
-            try {
-                const location = await axios.get(`${BASE_URL}/locations`)
-
-                console.log(location)
-                setLocation(location.data)
-            } catch (e) {
-
-            }
-        })()
+        fetchLocation()
     }, []);
 
-    return <div className="mt-6">
+    useEffect(() => {
+        console.log(notOwnedLocation)
+        setLocationSearch(notOwnedLocation.filter(item => item.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())))
+    }, [debouncedSearchTerm]);
 
-        <Accordion type="single" collapsible>
-            <AccordionItem value="item-1" >
-                <AccordionTrigger>
-        <p className="text-2xl font-bold mb-3" onClick={() => setOpenRecommend(true)}>Recommend locations:</p>
-                </AccordionTrigger>
-                <AccordionContent>
+    console.log("locationSearched",locationSearch)
+
+    return <div className="mt-6">
+        <div>
+            <div className="flex justify-between items-center mb-3">
+                <p className="text-2xl font-bold " onClick={() => setOpenRecommend(true)}>Owned location</p>
+                <Dialog>
+                    <DialogTrigger><Button><Search className="mr-1"/> Add location</Button></DialogTrigger>
+                    <DialogContent >
+                        <div className="mt-4">
+                       <Input placeholder="Search to select location..." value={searchVal} onChange={(e) => setSearchVal(e.target.value)}/>
+                            <div className="flex flex-col gap-3 mt-4">
+                                {locationSearch.map((item, index) => {
+                                    return <LocationBox isOwn trip={trip} item={item} locationId={item.id} index={index} total={total} user={user} fetch={fetchLocation}/>
+                                })}
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
+            </div>
             <div className="flex flex-col gap-3">
-                {location.map((item, index) => {
-                    return <LocationBox item={item} index={index}/>
+                {ownedLocation.map((item, index) => {
+                    return <LocationBox isOwn trip={trip} item={item.location_template} locationId={item.id} index={index} total={total} user={user} fetch={fetchLocation}/>
                 })}
             </div>
+        </div>
+         <Accordion type="single" collapsible defaultChecked={true} defaultValue="item-1">
+            <AccordionItem value="item-1">
+                <AccordionTrigger>
+                    <p className="text-2xl font-bold mb-3" onClick={() => setOpenRecommend(true)}>Recommend
+                        locations</p>
+                </AccordionTrigger>
+                <AccordionContent>
+                    <div className="flex flex-col gap-3">
+                        {notOwnedLocation.map((item, index) => {
+                            return <LocationBox trip={trip} item={item} index={index} total={total} user={user} fetch={fetchLocation}/>
+                        })}
+                    </div>
                 </AccordionContent>
             </AccordionItem>
         </Accordion>
@@ -99,39 +158,136 @@ export const Locations = ({}) => {
     </div>
 }
 
-const LocationBox = ({item, index}) => {
-    const [category,setCategory] = useState('')
+const LocationBox = ({item, index,trip, isOwn, total, user, fetch,locationId}) => {
+    const [category, setCategory] = useState('')
+    const [location, setLocation] = useState('')
+    const [price, setPrice]= useState(0)
+    const [expense, setExpense] = useState(0)
+    const [open, setOpen] = useState(false)
 
-    useEffect(() => {
-        (async  () => {
-            try{
-                const category = await axios.get(`${BASE_URL}/categories/${item.location_template.category_id}`)
-                setCategory(category.data.name)
-            }catch (e) {
+    console.log(item)
 
+    const initFetch = async () => {
+        try {
+            const category = await axios.get(`${BASE_URL}/categories/${item.category_id}`)
+            setCategory(category.data.name)
+            if(isOwn) {
+                // const location = await axios.get(`${BASE_URL}/locations/${item.id}`)
+                const expense = localStorage.getItem(`price:${user.id}:${item.id}`) || 0
+                console.log("expense", expense)
+                setExpense(+expense)
+                setPrice(+expense)
             }
-        })()
-    }, []);
+        } catch (e) {
+
+        }
+    }
+    useEffect(() => {
+        initFetch()
+    }, [isOwn]);
 
     if (index > 2) return
-    return <div key={index}
-                className="flex justify-between items-center gap-4 p-2  border-gray-200 rounded-xl overflow-hidden border-2 gap-20">
-        <div className="flex gap-2 items-center">
-            <img className="w-[50px] object-cover flex-1 rounded-lg h-full"
-                 src={!item.location_template.image || "https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D"}
-                 alt=""/>
-            <div className="w-[85%]">
-                <p className="font-semibold">{item.location_template.name}</p>
-                <p className="text-gray-600" style={{overflow:"hidden",textOverflow:"ellipsis",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{item.location_template.description || `This is a collection of 'best of' since I moved to the island at the beginning of 2019. Activities/sights, restaurants/bars, shopping, and places to stay in San Jan each have their own section. Other regions each get a single section that combines all of the above.`}</p>
-                <div className="mt-2">
-                    <Badge variant="outline">{category}</Badge>
+    return <>
+        <div key={index}
+             className="flex justify-between items-center gap-4 p-2  border-gray-200 rounded-xl overflow-hidden border-2 gap-20">
+            <div className="flex gap-2 items-center">
+                <img className="w-[50px] object-cover flex-1 rounded-lg h-full"
+                     src={!item.image || "https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D"}
+                     alt=""/>
+                <div className="w-[85%]">
+                    <p className="font-semibold">{item.name}</p>
+                    <p className="text-gray-600" style={{
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical"
+                    }}>{item.description || `This is a collection of 'best of' since I moved to the island at the beginning of 2019. Activities/sights, restaurants/bars, shopping, and places to stay in San Jan each have their own section. Other regions each get a single section that combines all of the above.`}</p>
+                    <div className="mt-2">
+                        <Badge variant="outline">{category}</Badge>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div className="mr-5">
-            <Button size="icon" variant="secondary"><PlusIcon/></Button>
-        </div>
+           <div className="flex gap-2 items-center">
+               <Dialog open={open} onOpenChange={setOpen}>
+                   <DialogTrigger asChild >
+                       {isOwn ?
+                           <div >
+                               <Button className="px-8" size="icon" variant="secondary" onClick={() => setPrice(expense)} >{trip.currency} {expense}</Button>
+                           </div>
+                           :
+                           <div className="mr-5">
+                               <Button size="icon" variant="secondary"><PlusIcon/></Button>
+                           </div>
+                       }
+                   </DialogTrigger>
+                   <DialogContent className="max-w-[600px]">
+                       <DialogHeader>
+                           <DialogTitle>{item.name}</DialogTitle>
+                       </DialogHeader>
+                       <DialogDescription>
+                           <img
+                               className="object-cover h-[40dvh] w-full"
+                               src={!item.image || "https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D"}
+                               alt=""/>
+                           <p className="text-gray-600 mt-3">{item.description || `This is a collection of 'best of' since I moved to the island at the beginning of 2019. Activities/sights, restaurants/bars, shopping, and places to stay in San Jan each have their own section. Other regions each get a single section that combines all of the above.`}</p>
+                       </DialogDescription>
+                       <DialogFooter>
+                           <div className="flex justify-between w-full items-center">
+                               <div>
+                                   <Input placeholder="Enter expense..." type="number" onChange={e => setPrice(e.target.value)}
+                                          className="w-full"/>
+                               </div>
+                               <Button onClick={async () => {
+                                   try {
+                                       if(isOwn) {
+                                           localStorage.setItem(`price:${user.id}:${item.id}`, price.toString())
+                                           await initFetch()
+                                           await fetch()
+                                           toast("Updated location", {type: "success"})
+                                           setOpen(false)
+                                           return
+                                       }
+                                       if (trip.budget < (+price + total)) {
+                                           toast("Your expenses have exceeded the allowable limit.",{type:"error"})
+                                           return
+                                       }
 
+                                       console.log({
+                                           location_template_id: item.id, expense: price
+                                       })
+                                       const res = await axios.post(`${BASE_URL}/locations`, {
+                                           location_template_id: item.id, expense: price,
+                                           trip_id: trip.id
+                                       })
+                                       const expense = await axios.post(`${BASE_URL}/expenses`, {
+                                           cost: price,
+                                           location_id: res.data.id,
+                                       })
+                                       localStorage.setItem(`price:${user.id}:${res.data.id}`, price.toString())
+                                       toast("Added location", {type: "success"})
+                                       setPrice(0)
+                                       fetch()
+                                       setOpen(false)
+                                   } catch (e) {
+                                       console.log(e)
+                                   }
+                               }}>{isOwn ? "Update" : "Add"} location</Button>
+                           </div>
+                       </DialogFooter>
+                   </DialogContent>
+               </Dialog>
+               {isOwn && <Button onClick={ async () => {
+                   try{
+                       await axios.delete(`${BASE_URL}/locations/${locationId}`)
+                       await fetch()
+                       toast("Delete success",{type:"success"})
 
-    </div>
+                   }catch (e) {
+                       toast("Delete failed",{type:"error"})
+                   }
+               }} variant="outline" className="text-red-500" size="icon"><Trash /></Button>}
+           </div>
+        </div>
+    </>
 }
