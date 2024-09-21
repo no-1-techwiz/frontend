@@ -86,9 +86,11 @@ export const Locations = ({}) => {
         <p className="text-2xl font-bold mb-3" onClick={() => setOpenRecommend(true)}>Recommend locations:</p>
                 </AccordionTrigger>
                 <AccordionContent>
-            {location.map((item, index) => {
-                return <LocationBox item={item} index={index}/>
-            })}
+            <div className="flex flex-col gap-3">
+                {location.map((item, index) => {
+                    return <LocationBox item={item} index={index}/>
+                })}
+            </div>
                 </AccordionContent>
             </AccordionItem>
         </Accordion>
@@ -121,7 +123,7 @@ const LocationBox = ({item, index}) => {
             <div className="w-[85%]">
                 <p className="font-semibold">{item.location_template.name}</p>
                 <p className="text-gray-600" style={{overflow:"hidden",textOverflow:"ellipsis",display:"-webkit-box",WebkitLineClamp:2,WebkitBoxOrient:"vertical"}}>{item.location_template.description || `This is a collection of 'best of' since I moved to the island at the beginning of 2019. Activities/sights, restaurants/bars, shopping, and places to stay in San Jan each have their own section. Other regions each get a single section that combines all of the above.`}</p>
-                <div>
+                <div className="mt-2">
                     <Badge variant="outline">{category}</Badge>
                 </div>
             </div>

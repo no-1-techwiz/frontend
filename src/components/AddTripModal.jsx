@@ -20,7 +20,7 @@ export const AddTripModal = ({children}) => {
     const [date, setDate] = useState()
     const [place, setPlace] = useState('')
     const navigate = useNavigate()
-    const {loggined} = useLoggined()
+    const {loggined, user} = useLoggined()
 
     const handleSubmit = async () => {
         try{
@@ -38,7 +38,7 @@ export const AddTripModal = ({children}) => {
                 id, place, startDate: date.from, endDate: date.to
             }
             const newTripApi = {
-                user_id:1, destination:place, trip_name:"Trip to " + place, start_date: convertDate(date.from), end_date: convertDate(date.to), budget: 0, note:"We need to add a note here",
+                user_id:user.id, destination:place, trip_name:"Trip to " + place, start_date: convertDate(date.from), end_date: convertDate(date.to), budget: 0, note:"We need to add a note here",
             }
 
             const res = await axios.post(`${BASE_URL}/trips`, newTripApi)

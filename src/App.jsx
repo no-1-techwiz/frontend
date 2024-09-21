@@ -41,7 +41,7 @@ const App = () => (
       <Route path='/trip/:id' element={<TripDetail />} />
 
       <Route path='/admin' element={<Admin/>}>
-        <Route path='/admin/location' element={<ManageLocation/>}/>
+        {/*<Route path='/admin/location' element={<ManageLocation/>}/>*/}
       </Route>
     </Routes>
 );

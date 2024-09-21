@@ -18,7 +18,9 @@ export const useLoggined = () => {
             // });
             if(accessToken) {
                 setLoggined(true);
-                setUser(JSON.parse(localStorage.getItem("user") || '{}'));
+                const user = JSON.parse(localStorage.getItem("user") || '{}')
+                console.log(user)
+                setUser(user);
                 // setUser(accessToken);
             } else {
                 setLoggined(false);

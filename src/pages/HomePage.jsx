@@ -2,6 +2,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import '../styles/HomePage.css'
 import { Card, CardContent } from '@components/ui/card.jsx'
 import {AddTripModal} from "@components/AddTripModal.jsx";
+import {RecentlyViewed} from "@components/RecentlyViewed.jsx";
 export const HomePage = () => {
     return (
         <div className="home-page">
@@ -18,6 +19,9 @@ export const HomePage = () => {
                         <img src="https://wanderlog.com/assets/LandingPageHero__path.png" alt="" />
                     </div>
                 </div>
+            </div>
+            <div className="px-32">
+                <RecentlyViewed />
             </div>
             <div className='view-plane'>
                 <div className='bg-view-plane'>
