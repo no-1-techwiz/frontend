@@ -41,7 +41,10 @@ const App = () => (
       <Route path='/trip/:id' element={<TripDetail />} />
 
       <Route path='/admin' element={<Admin/>}>
-        {/*<Route path='/admin/location' element={<ManageLocation/>}/>*/}
+      <Route index element={<ListLocation/>}/>
+        <Route index path='/admin/location' element={<ListLocation/>}/>
+        <Route path='/admin/location/:id' element={<DetailsLocation/>}/>
+        <Route path='/admin/currency' element={<ListCurrencies/>}/>
       </Route>
     </Routes>
 );
