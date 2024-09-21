@@ -1,5 +1,5 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {useState, useCallback, useEffect} from "react";
+import {useState, useCallback, useEffect, useMemo} from "react";
 import {GoogleMap, useJsApiLoader} from '@react-google-maps/api';
 import {TripSide} from "@components/TripSide.jsx";
 import {Button} from "@components/ui/button.jsx";
@@ -21,6 +21,7 @@ import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import axios from "axios";
 import {BASE_URL} from "@/lib/consts.js";
 import {Locations} from "@components/Location.jsx";
+import {imageList} from "@components/RecentlyViewed.jsx";
 
 /*
 trip {
@@ -29,11 +30,12 @@ trip {
     startDate: string,
     endDate: string,
     currency: string,
-
+    budget: number,
 }
  */
 
 export const TripDetail = () => {
+    const randomImg = useMemo(() => Math.floor(Math.random() * imageList.length), [])
 
     const {id} = useParams()
     const [trip, setTrip] = useState()
@@ -42,12 +44,12 @@ export const TripDetail = () => {
     const [openBudget, setOpenBudget] = useState(false)
     const [budgetVal, setBudgetVal] = useState('')
     const [currencyVal, setCurrencyVal] = useState('$')
-    const {loggined} = useLoggined()
+    const {loggined, user} = useLoggined()
     const navigate = useNavigate()
     useEffect(() => {
         const getTrip = async () => {
-            // const currentTrip = (await axios.get(`${BASE_URL}/trips/${id}`)).data
-            const currentTrip = JSON.parse(localStorage.getItem(`trip:${id}`))
+            const currentTrip = (await axios.get(`${BASE_URL}/trips/${id}`)).data
+            // const currentTrip = JSON.parse(localStorage.getItem(`trip:${id}`))
             console.log(currentTrip)
             setTrip(currentTrip)
         }
@@ -67,7 +69,7 @@ export const TripDetail = () => {
             <TripSide>
                 <div className="w-full relative" id="overview">
                     <img className="w-full h-[250px] object-cover object-center"
-                         src="https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/HPsJUyz4sfWmWXZ0134FKFzrGVq0xhYQ"
+                         src={imageList[randomImg]} //"https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/HPsJUyz4sfWmWXZ0134FKFzrGVq0xhYQ"
                          alt=""
                     />
                     <div className="absolute bottom-[-30px] left-[50%] p-[30px] bg-white min-w-[400px] rounded-xl"
@@ -137,11 +139,18 @@ export const TripDetail = () => {
                                 }}/>}
                         </div>
                     </div>
-                    <Locations />
+                    <div id="locations">
+                        <Locations trip={trip} user={user}/>
+                    </div>
                     <div className="flex flex-col gap-4 mt-10" id="budget">
                         <div className="flex items-center justify-between">
                             <p className="text-2xl font-bold">Budgeting</p>
-                            <Button className="flex items-center gap-2"><Plus/> Add expense</Button>
+                            <Button className="flex items-center gap-2" onClick={() => {
+                                const element = document.getElementById('locations');
+                                element?.scrollIntoView({
+                                    behavior: 'smooth'
+                                });
+                            }}><Plus/> Add expense</Button>
                         </div>
                         <div className="bg-neutral-100 p-6 flex justify-between items-center rounded-xl">
                             <div>

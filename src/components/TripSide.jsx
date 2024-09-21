@@ -4,7 +4,7 @@ import {useState} from "react";
 import {toCapitalize} from "@/src/libs/utils.js";
 import {useNavigate} from "react-router-dom";
 
-const listMenu = ['overview','note', 'budget' ]
+const listMenu = ['overview','note', 'budget','locations' ]
 
 export const TripSide = ({children}) => {
 

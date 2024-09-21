@@ -32,7 +32,8 @@ export const Login = () => {
                         console.log(res.data);
                         localStorage.setItem("accessToken", res.data.access_token)
                         localStorage.setItem("user", JSON.stringify({...res.data, img: decoded.picture,name: decoded.given_name}))
-                        navigate("/")
+                        console.log(res.data.role)
+                        navigate(res.data.role === "admin" ? "/admin" : "/")
                     }}
                     onError={() => {
                         console.log('Login Failed');
@@ -50,6 +51,7 @@ export const Login = () => {
 
 const LoginForm = ({setRegis}) => {
 
+    const navigate = useNavigate()
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -70,7 +72,8 @@ const LoginForm = ({setRegis}) => {
                 name: data.user.name,
                 img: data.user.img
             }))
-                // window.location.href = "/";
+            navigate(res.data.role === "admin" ? "/admin" : "/")
+
         }catch (e) {
             console.log(e)
         }
@@ -119,7 +122,7 @@ const RegisterForm = ({setLogin}) => {
 
     return <div className="flex flex-col gap-2 w-full">
         <div>
-            <label htmlFor="" className="font-semibold">Email</label>
+            <label htmlFor="" className="font-semibold">User</label>
             <Input value={name} onChange={e => setUsername(e.target.value)} type="string" placeholder="Enter name ...." className="w-full"/>
         </div>
         <div>
