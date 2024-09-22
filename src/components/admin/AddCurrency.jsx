@@ -6,15 +6,12 @@ import {Button} from "@components/ui/button.jsx";
 import {Input} from "@components/ui/input.jsx";
 import { Label } from "@radix-ui/react-dropdown-menu";
 
-export function EditProfile(props) {
+export function AddCurrency(props) {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button type="Button" className="btn rounded-full  flex gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                    </svg>
-                    Edit
+                <Button type="Button" className="btn flex gap-2">
+                    Add New 
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
@@ -29,13 +26,19 @@ export function EditProfile(props) {
                         <Label htmlFor="name" className="text-right">
                             Name
                         </Label>
-                        <Input id="name" placeholder="Display Name" className="col-span-3" />
+                        <Input id="name" name="name" placeholder="Display Name" className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="username" className="text-right">
-                            Username
+                        <Label htmlFor="code" className="text-right">
+                            Code
                         </Label>
-                        <Input id="username" value={props.username} className="col-span-3" />
+                        <Input id="code" name="code" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="symbol" className="text-right">
+                            Symbol
+                        </Label>
+                        <Input id="symbol" name="symbol" className="col-span-3" />
                     </div>
                 </div>
                 <DialogFooter>

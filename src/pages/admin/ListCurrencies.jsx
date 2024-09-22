@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { AddCurrency } from "@/src/components/admin/AddCurrency"
 
 export const ListCurrencies = () => {
 
@@ -10,7 +11,9 @@ export const ListCurrencies = () => {
       <div className="container mx-auto my-12">
         <div>
           <h1 >Manage Currencies </h1>
-          <Button type="button" className="my-2">Add New</Button>
+          <div className="my-2">
+          <AddCurrency/>
+          </div>
         </div>
         <div class="relative overflow-x-auto">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -20,10 +23,10 @@ export const ListCurrencies = () => {
                   Currency Name
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Symbol
+                  Code
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Code
+                  Symbol
                 </th>
               </tr>
             </thead>

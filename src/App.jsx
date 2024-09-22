@@ -14,6 +14,7 @@ import {LibraryPage} from "@/src/pages/LibraryPage.jsx";
 import { ListLocation } from './pages/admin/ListLocation';
 import { DetailsLocation } from './pages/admin/DetailsLocation';
 import { ListCurrencies } from './pages/admin/ListCurrencies';
+import { NewLocation } from './pages/admin/NewLocation';
 
 const features = [
   {
@@ -46,7 +47,8 @@ const App = () => (
       <Route path='/admin' element={<Admin/>}>
       <Route index element={<ListLocation/>}/>
         <Route index path='/admin/location' element={<ListLocation/>}/>
-        <Route path='/admin/location/:id' element={<DetailsLocation/>}/>
+        <Route path='/admin/location/details/:id' element={<DetailsLocation/>}/>
+        <Route path='/admin/location/new' element={<NewLocation/>}/>
         <Route path='/admin/currency' element={<ListCurrencies  />}/>
       </Route>
     </Routes>

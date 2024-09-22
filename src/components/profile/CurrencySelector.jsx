@@ -22,25 +22,21 @@ import {
 
 const frameworks = [
   {
-    value: "next.js",
-    label: "Next.js",
+    value: "usd",
+    label: "$ - USD",
   },
   {
-    value: "sveltekit",
-    label: "SvelteKit",
+    value: "vnd",
+    label: "đ - VND",
   },
   {
-    value: "nuxt.js",
-    label: "Nuxt.js",
+    value: "gbp",
+    label: "£ - GBP",
   },
   {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
+    value: "idr",
+    label: "₹ - IDR",
+  }
 ]
 
 export function CurrencySelector() {
@@ -58,7 +54,7 @@ export function CurrencySelector() {
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+            : "Select your currency..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -66,7 +62,7 @@ export function CurrencySelector() {
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
-            <CommandEmpty>No framework found.</CommandEmpty>
+            <CommandEmpty>No currency found.</CommandEmpty>
             <CommandGroup>
               {frameworks.map((framework) => (
                 <CommandItem
