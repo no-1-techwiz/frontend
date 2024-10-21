@@ -8,7 +8,7 @@ import {Input} from "@components/ui/input.jsx";
 import {toast} from "react-toastify";
 import {format} from 'date-fns';
 import {Popover, PopoverContent, PopoverTrigger} from "@components/ui/popover.jsx";
-import {cn} from "@/lib/utils.js";
+import {cn} from "@/src/libs/utils.js";
 import {Calendar} from "@components/ui/calendar.jsx";
 import {Textarea} from "@components/ui/textarea.jsx";
 import {
@@ -19,7 +19,7 @@ import {
 } from "@components/ui/select.jsx";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import axios from "axios";
-import {BASE_URL} from "@/lib/consts.js";
+import {BASE_URL} from "@/src/libs/consts.js";
 import {Locations} from "@components/Location.jsx";
 import {imageList} from "@components/RecentlyViewed.jsx";
 import {Alert, AlertDescription, AlertTitle} from "@components/ui/alert.jsx";

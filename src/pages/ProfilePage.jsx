@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom"
 import {EditProfile} from "../components/profile/EditProfile"
 import {ProfileSettings} from "../components/profile/ProfileSettings"
-import {Button} from "../components/ui/Button"
+import {Button} from "@components/ui/button"
 import {imageList, RecentlyViewed} from "@components/RecentlyViewed.jsx";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import {Locate} from "lucide-react";

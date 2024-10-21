@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { useParams } from "react-router-dom"
 
 export const DetailsLocation = () => {
@@ -26,20 +25,18 @@ export const DetailsLocation = () => {
                                     <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Location Name</label>
                                     <div class="mt-2">
                                         <div class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                            <input type="text" name="name" id="name" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
+                                            <input type="text" name="username" id="username" autocomplete="username" class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" placeholder="The location name" />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="sm:col-span-3">
-                                    <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Category</label>
+                                    <label for="country" class="block text-sm font-medium leading-6 text-gray-900">Country</label>
                                     <div class="mt-2">
-                                        <select id="category" name="category" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" >
-                                            <option value='accommodations'>Accommodations</option>
-                                            <option value='attractions'>Attractions</option>
-                                            <option value='transport'>Transport</option>
-                                            <option value='activities'>Activities</option>
-                                            <option value='others'>Others</option>
+                                        <select id="country" name="country" autocomplete="country-name" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6" >
+                                            <option>United States</option>
+                                            <option>Canada</option>
+                                            <option>Mexico</option>
                                         </select>
                                     </div>
                                 </div>

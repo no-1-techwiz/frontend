@@ -5,7 +5,7 @@ import {jwtDecode} from "jwt-decode";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
-import {BASE_URL} from "@/lib/consts.js";
+import {BASE_URL} from "@/src/libs/consts.js";
 import {useState} from "react"
 
 export const Login = () => {
@@ -16,9 +16,9 @@ export const Login = () => {
 
     return <div className="flex flex-col items-center justify-center min-h-screen py-2">
         <div className="w-[500px] h-max flex flex-col items-center justify-center bg-white rounded-lg shadow-lg gap-5 px-8 py-8" style={{boxShadow:"rgba(0, 0, 0, 0.1) 0px 4px 12px"}}>
-                <img className="w-[40px] h-[40px]" src="https://wanderlog.com/assets/logo.png" alt=""/>
+                <img className="w-[40px] h-[40px]" src="https://scontent.fhan14-3.fna.fbcdn.net/v/t1.15752-9/394929015_1369607813980095_3837430713076447935_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGHkHyrZC0tG43IuSpfVutDWKTgWvUYxXFYpOBa9RjFcW3exsezPUxirxvhfwbPuzwSPdY4dLztvIdTd5hEfnT-&_nc_ohc=hPoVeY5rBJoQ7kNvgH_ZzMO&_nc_ht=scontent.fhan14-3.fna&_nc_gid=AupVwifjNSmSdcCNh02jQCy&oh=03_Q7cD1QFIk3Arxi-7BDp3-vPg-rBug5MqxH9E9_M1x8R06QrGlg&oe=6716F95C" alt=""/>
             <div className="flex flex-col items-center justify-center gap-y-1">
-                <h1 className="text-3xl font-semibold">Sign {isLogin ? "in" : "up"} to Wanderlog</h1>
+                <h1 className="text-3xl font-semibold">Sign {isLogin ? "in" : "up"} to Travellog</h1>
                 <p className="">Welcome back! Please sign in to continue</p>
             </div>
             <div className="w-full flex flex-col items-center justify-center gap-y-1">

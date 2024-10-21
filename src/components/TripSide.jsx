@@ -14,8 +14,8 @@ export const TripSide = ({children}) => {
     return <div className="w-full  h-[100dvh]">
         <div className="flex gap-3 border-b-2 py-2">
             <div className="flex items-center gap-1 cursor-pointer pl-[150px]">
-                <img onClick={() => navigate(`/`)} className="w-[30px] h-[30px]" src="https://wanderlog.com/assets/logo.png" alt=""/>
-                {/*<h1 className="text-red-500 font-semibold">Wanderlog</h1>*/}
+                <img onClick={() => navigate(`/`)} className="w-[30px] h-[30px]" src="https://scontent.fhan14-3.fna.fbcdn.net/v/t1.15752-9/394929015_1369607813980095_3837430713076447935_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeGHkHyrZC0tG43IuSpfVutDWKTgWvUYxXFYpOBa9RjFcW3exsezPUxirxvhfwbPuzwSPdY4dLztvIdTd5hEfnT-&_nc_ohc=hPoVeY5rBJoQ7kNvgH_ZzMO&_nc_ht=scontent.fhan14-3.fna&_nc_gid=AupVwifjNSmSdcCNh02jQCy&oh=03_Q7cD1QFIk3Arxi-7BDp3-vPg-rBug5MqxH9E9_M1x8R06QrGlg&oe=6716F95C" alt=""/>
+                {/*<h1 className="text-red-500 font-semibold">Travellog</h1>*/}
             </div>
         </div>
         <div className="flex">

@@ -21,10 +21,10 @@ export const Admin = ({ children }) => {
                 <div className="hidden lg:flex lg:gap-x-12">
                     <Link to="/admin/location" className="text-sm font-semibold leading-6 text-gray-900">Manage Locations</Link>
                     <Link to="/admin/currency" className="text-sm font-semibold leading-6 text-gray-900">Edit Currencies</Link>
-                    {/* <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Manage Categories</a> */}
+                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Manage Categories</a>
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <Link to="/" className="text-sm font-semibold leading-6 text-gray-900">Go Back<span aria-hidden="true">&rarr;</span></Link>
+                    <a href="#" className="text-sm font-semibold leading-6 text-gray-900">Go Back<span aria-hidden="true">&rarr;</span></a>
                 </div>
             </nav>
         </header>

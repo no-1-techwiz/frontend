@@ -49,7 +49,7 @@
 
 import {useEffect, useMemo, useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "@/lib/consts.js";
+import {BASE_URL} from "@/src/libs/consts.js";
 import {Button} from "@components/ui/button.jsx";
 import {PlusIcon, Search, Trash} from "lucide-react";
 import {Badge} from "@components/ui/badge.jsx";

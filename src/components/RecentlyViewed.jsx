@@ -1,6 +1,6 @@
 import {useEffect, useMemo, useState} from "react";
 import axios from "axios";
-import {BASE_URL} from "@/lib/consts.js";
+import {BASE_URL} from "@/src/libs/consts.js";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import {useNavigate} from "react-router-dom";
 import {AddTripModal} from "@components/AddTripModal.jsx";

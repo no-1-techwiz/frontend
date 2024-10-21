@@ -8,13 +8,13 @@ import {Popover, PopoverContent, PopoverTrigger} from "@components/ui/popover.js
 import {CalendarIcon} from "lucide-react";
 import {Calendar} from "@components/ui/calendar.jsx";
 import {format} from "date-fns"
-import {cn} from "@/lib/utils.js";
+import {cn} from "@/src/libs/utils.js";
 import {toast} from "react-toastify";
 import {convertDate, generateUUID} from "@/src/libs/utils.js";
 import {useNavigate} from "react-router-dom";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import axios from "axios";
-import {BASE_URL} from "@/lib/consts.js";
+import {BASE_URL} from "@/src/libs/consts.js";
 
 export const AddTripModal = ({children}) => {
     const [date, setDate] = useState()

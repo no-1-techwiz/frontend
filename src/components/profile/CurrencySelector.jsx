@@ -3,8 +3,8 @@
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/src/libs/utils"
+import { Button } from "@components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -22,21 +22,25 @@ import {
 
 const frameworks = [
   {
-    value: "usd",
-    label: "$ - USD",
+    value: "next.js",
+    label: "Next.js",
   },
   {
-    value: "vnd",
-    label: "đ - VND",
+    value: "sveltekit",
+    label: "SvelteKit",
   },
   {
-    value: "gbp",
-    label: "£ - GBP",
+    value: "nuxt.js",
+    label: "Nuxt.js",
   },
   {
-    value: "idr",
-    label: "₹ - IDR",
-  }
+    value: "remix",
+    label: "Remix",
+  },
+  {
+    value: "astro",
+    label: "Astro",
+  },
 ]
 
 export function CurrencySelector() {
@@ -54,7 +58,7 @@ export function CurrencySelector() {
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select your currency..."}
+            : "Select framework..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -62,7 +66,7 @@ export function CurrencySelector() {
         <Command>
           <CommandInput placeholder="Search framework..." />
           <CommandList>
-            <CommandEmpty>No currency found.</CommandEmpty>
+            <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>
               {frameworks.map((framework) => (
                 <CommandItem

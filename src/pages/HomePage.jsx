@@ -102,7 +102,7 @@ export const HomePage = () => {
                                             <i class="fa-solid fa-star"></i>
                                         </div>
                                         <div className='text-comment'>
-                                            <p>I’ve been dreaming of a tool like this for years and finally it’s here! Wanderlog is my new go-to tool after decades of professional travel.</p>
+                                            <p>I’ve been dreaming of a tool like this for years and finally it’s here! Travellog is my new go-to tool after decades of professional travel.</p>
                                         </div>
                                         <div className='avatar-comment'>
                                             <img src="https://lh3.googleusercontent.com/a/ACg8ocLylRaYGsOxVeFfFWN6BtIJhUF8BML4N2MCWoHmlFWZv3-wnJo=s96-c-rg-br100" alt="" />
