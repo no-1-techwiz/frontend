@@ -37,6 +37,7 @@ export const AddTripModal = ({children}) => {
             const newTrip = {
                 id, place, startDate: date.from, endDate: date.to
             }
+            console.log("user.id",user.id)
             const newTripApi = {
                 user_id:user.id, destination:place, trip_name:"Trip to " + place, start_date: convertDate(date.from), end_date: convertDate(date.to), budget: 0, note:"Write a note",
                 currency: "$"
@@ -45,10 +46,11 @@ export const AddTripModal = ({children}) => {
             const res = await axios.post(`${BASE_URL}/trips`, newTripApi)
 
             localStorage.setItem(`trip:${res.data.id}`, JSON.stringify(res.data))
+            // await axios.post("http://localhost:3000/email",{email: localStorage.getItem(`email${user?.id}`) || ''})
             toast("Trip added", {type: "success"})
             navigate(`trip/${res.data.id}`)
         }catch (e) {
-            toast("Error adding trip", {type: "error"})
+            // toast("Error adding trip", {type: "error"})
 
         }
     }

@@ -35,7 +35,7 @@ import {Button} from "@components/ui/button.jsx";
 
 export const imageList = ["https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/HPsJUyz4sfWmWXZ0134FKFzrGVq0xhYQ", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/3e3svAf3blCKyWuPgLbeS0NI7hVF704p", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/LrbT4ax423VhdNixj8ICQkpFQvIho8SM", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/VIUrqSNzoqem2MPYfxrIHFpY17fflHmT", "https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImageSmall/5s6tsMMA1suKm0sce1aAQxbZwE7qextR"]
 
-export const RecentlyViewed = ({isProfile}) => {
+export const UpComingTrip = ({isProfile}) => {
 
 
     const [trip, setTrip] = useState([])
@@ -45,21 +45,20 @@ export const RecentlyViewed = ({isProfile}) => {
         (async () => {
             try {
                 const res = await axios.get(`${BASE_URL}/trips`)
-                console.log(res.data)
                 setTrip(res.data.filter(item => {
-                    return item.user_id == user.id
+                    return item.user_id == user.id && new Date(item.start_date) > new Date()
                 }))
             } catch (e) {
 
             }
         })()
-    }, [user,loggined]);
+    }, [user]);
 
     if (!loggined) return
 
     return <div className="mt-10">
         {!isProfile &&  <div className="flex justify-between items-center mb-6">
-            <p className="font-bold text-2xl " >Recently Viewed</p>
+            <p className="font-bold text-2xl " >Upcoming Trip</p>
             <AddTripModal>
                 <Button className="px-7" >Add trip</Button>
             </AddTripModal>

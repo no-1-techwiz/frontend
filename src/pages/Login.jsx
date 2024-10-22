@@ -70,7 +70,8 @@ const LoginForm = ({setRegis}) => {
                 localStorage.setItem("user", JSON.stringify({
                 email: data.email,
                 name: data.name,
-                img: data.img
+                img: data.img,
+                    ...data
             }))
             navigate(data.email === "admin@gmail.com" ? "/admin" : "/")
 

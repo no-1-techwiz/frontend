@@ -3,6 +3,8 @@ import '../styles/HomePage.css'
 import { Card, CardContent } from '@components/ui/card.jsx'
 import {AddTripModal} from "@components/AddTripModal.jsx";
 import {RecentlyViewed} from "@components/RecentlyViewed.jsx";
+import {UpComingTrip} from "@components/UpcomingTrip.jsx";
+import {Subsrcibe} from "@components/Subsrcibe.jsx";
 export const HomePage = () => {
     return (
         <div className="home-page">
@@ -20,8 +22,12 @@ export const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <div className="px-32">
+            <div className="flex flex-col gap-5 justify-center px-32">
                 <RecentlyViewed />
+                <UpComingTrip />
+            </div>
+            <div className="">
+                <Subsrcibe />
             </div>
             <div className='view-plane'>
                 <div className='bg-view-plane'>

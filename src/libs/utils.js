@@ -27,3 +27,12 @@ export function generateUUID() {
 
         return `${year}-${month}-${day}`;
     };
+
+export function isMoreThanOneDayFromNow(inputDate) {
+    const oneDayInMillis = 24 * 60 * 60 * 1000 * 7; // 1 ngày tính bằng milliseconds
+    const currentDate = Date.now(); // thời gian hiện tại (milliseconds)
+
+    const targetDate = new Date(inputDate).getTime(); // thời gian của ngày cần kiểm tra (milliseconds)
+
+    return (targetDate - currentDate) >= oneDayInMillis;
+}

@@ -153,21 +153,25 @@ export const TripDetail = () => {
                     <div className="flex flex-col gap-2 mt-16" id="note">
                         <p className="font-bold text-2xl">Note:</p>
                         <div>
-                            {!isEditNote ? <div className="flex gap-2 items-center">
-                                    <p className="text-2xl font-medium">{trip.note || "Write or paste anything here"}</p>
-                                    <Button size="icon" variant="ghost" onClick={() => setIsEditNote(true)}><PenLine
-                                        size={20}/></Button>
-                                </div> :
+                            {/*{!isEditNote ? <div className="flex gap-2 items-center">*/}
+                            {/*        <p className="text-2xl font-medium">{trip.note || "Write or paste anything here"}</p>*/}
+                            {/*        <Button size="icon" variant="ghost" onClick={() => setIsEditNote(true)}><PenLine*/}
+                            {/*            size={20}/></Button>*/}
+                            {/*    </div> :*/}
                                 <Textarea placeholder="Write or paste anything here: how to get around, tips and tricks"
-                                          className="w-[80%]"
-                                          defaultValue={trip.note} onKeyDown={(e) => {
+                                          className="w-full"
+                                          defaultValue={trip.note}
+                                          onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         console.log('do validate');
                                         handleSetTrip({...trip, note: e.target.value})
                                         setIsEditNote(false)
                                         toast('Note updated')
                                     }
-                                }}/>}
+                                }}
+                                          rows={4}
+                                />
+                        {/*}*/}
                         </div>
                     </div>
                     <div className="w-full h-[1px] bg-neutral-200 my-5"></div>
