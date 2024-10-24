@@ -1,6 +1,7 @@
 import Feature from '@components/Feature';
 import Footer from '@components/Footer';
 import logo from '@images/logo.png';
+import "@radix-ui/themes/styles.css";
 import {Route, Routes} from "react-router-dom";
 import {HomePage} from "@/src/pages/HomePage.jsx";
 import {Layout} from "@components/Layout.jsx";
@@ -12,7 +13,7 @@ import { AboutPage } from './pages/AboutPage';
 import { Admin } from './pages/admin/Admin';
 import {LibraryPage} from "@/src/pages/LibraryPage.jsx";
 import { ListLocation } from './pages/admin/ListLocation';
-import { DetailsLocation } from './pages/admin/DetailsLocation';
+import { LocationDetails } from './pages/admin/LocationDetails';
 import { ListCurrencies } from './pages/admin/ListCurrencies';
 
 const features = [
@@ -46,7 +47,7 @@ const App = () => (
       <Route path='/admin' element={<Admin/>}>
       <Route index element={<ListLocation/>}/>
         <Route index path='/admin/location' element={<ListLocation/>}/>
-        <Route path='/admin/location/:id' element={<DetailsLocation/>}/>
+        <Route path='/admin/location/:id' element={<LocationDetails/>}/>
         <Route path='/admin/currency' element={<ListCurrencies  />}/>
       </Route>
     </Routes>

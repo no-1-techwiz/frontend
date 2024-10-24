@@ -10,12 +10,17 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 import {Toaster} from "@components/ui/toaster.jsx";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Theme } from '@radix-ui/themes';
+import "@radix-ui/themes/styles.css";
+
 
 createRoot(document.getElementById('root')).render(<GoogleOAuthProvider
     clientId="1035405520449-737opod5dblop954gvltb6btkaqbut54.apps.googleusercontent.com">
     <Toaster/>
     <ToastContainer />
+    <Theme>
     <BrowserRouter>
         <App/>
     </BrowserRouter>
+    </Theme>
 </GoogleOAuthProvider>);
