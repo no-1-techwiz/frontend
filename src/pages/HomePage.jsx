@@ -1,8 +1,9 @@
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@components/ui/carousel.jsx'
 import '../styles/HomePage.css'
 import { Card, CardContent } from '@components/ui/card.jsx'
-import {AddTripModal} from "@components/AddTripModal.jsx";
-import {RecentlyViewed} from "@components/RecentlyViewed.jsx";
+import { AddTripModal } from "@components/AddTripModal.jsx";
+import { RecentlyViewed } from "@components/RecentlyViewed.jsx";
+import ShowBlog from './ShowBlog';
 export const HomePage = () => {
     return (
         <div className="home-page">
@@ -260,6 +261,7 @@ export const HomePage = () => {
                     </div>
                 </div>
             </div>
+            <ShowBlog />
         </div>
     )
 }

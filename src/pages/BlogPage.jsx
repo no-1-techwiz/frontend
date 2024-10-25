@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 import { FiUser } from 'react-icons/fi';
 import { toast, ToastContainer } from 'react-toastify';
@@ -14,7 +14,11 @@ const BlogPage = () => {
     const handleThumbnailChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setThumbnail(URL.createObjectURL(file));
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setThumbnail(reader.result);
+            };
+            reader.readAsDataURL(file);
         }
     };
 
@@ -25,13 +29,15 @@ const BlogPage = () => {
             thumbnail,
             content,
         };
-        localStorage.setItem('blogPost', JSON.stringify(postData));
 
-        // Display toast notification
+        const existingPosts = JSON.parse(localStorage.getItem('blogPosts')) || [];
+        existingPosts.push(postData);
+        localStorage.setItem('blogPosts', JSON.stringify(existingPosts));
+
         toast.success('Post saved successfully!', {
             position: "top-right",
             autoClose: 3000,
-            onClose: () => window.location.reload(), // Reload page after the toast disappears
+            onClose: () => window.location.reload(),
         });
     };
 
@@ -44,7 +50,7 @@ const BlogPage = () => {
                 .then((editor) => {
                     setEditorInstance(editor);
                     const toolbar = editor.ui.view.toolbar.element;
-                    editorRef.current.before(toolbar); // Insert toolbar above the editor
+                    editorRef.current.before(toolbar);
                 })
                 .catch((error) => console.error('Editor init error:', error));
         }
@@ -56,7 +62,6 @@ const BlogPage = () => {
 
     return (
         <div className="flex flex-col items-center w-2/3 mx-auto mt-10 space-y-6 text-white">
-            {/* Toast container for notifications */}
             <ToastContainer />
 
             <div className="relative w-1/4">
