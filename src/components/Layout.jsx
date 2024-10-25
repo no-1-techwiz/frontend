@@ -1,7 +1,7 @@
 import {Outlet, useNavigate} from "react-router-dom";
 import {Input} from "@components/ui/input.jsx";
 import {Button} from "@components/ui/button.jsx";
-import {Bell, CircleDot, Dot, Search} from "lucide-react";
+import {Bell, CircleDot, ClockAlert, Dot, Search} from "lucide-react";
 import {useLoggined} from "@/src/libs/hooks/useLoggined.js";
 import {
     DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
@@ -10,6 +10,7 @@ import {isMoreThanOneDayFromNow, toCapitalize} from "@/src/libs/utils.js";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {BASE_URL} from "@/src/libs/consts.js";
+import "../styles/Layout.css"
 
 const menu = ['home', 'about', 'contact', 'library']
 
@@ -75,15 +76,17 @@ export const Layout = ({children}) => {
                     {/*</div>*/}
                     <div className="cursor-pointer hover:text-red-300">
                         <DropdownMenu>
-                            <DropdownMenuTrigger>
+                            <DropdownMenuTrigger className="relative">
                                 <Bell/>
+                                <Dot className="text-red-300 absolute -right-5 -top-6" size={50}/>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent>
                                 {notifications.map((item,index) => {
                                     if (index >4) return
                                     return <>
                                         <DropdownMenuItem className="flex gap-1 items-center hover:bg-neutral-300" onClick={() => {navigate(`/trip/${item.id}`)}}>
-                                            <Dot className="text-blue-600"/>
+                                            {/*<Dot className="text-blue-600"/>*/}
+                                            <ClockAlert className={` ${index < 2 ? "text-red-300" : "text-blue-600"}`}/>
                                             {item.title}
                                         </DropdownMenuItem>
                                     </>
@@ -121,6 +124,86 @@ export const Layout = ({children}) => {
         </div>
         {children}
         <Outlet/>
+        <div className="footer-page">
+            <div className="footer-main">
+                <h2>For every kind of trip and every destination</h2>
+                <div className="text-footer">
+                    <div className="item-text-footer">
+                        <h3>The best road trip planner</h3>
+                        <p>Use Wanderlog as a route map showing directions, distances, and driving times between different attractions you might want to visit.</p>
+                    </div>
+                    <div className="item-text-footer">
+                        <h3>The best vacation planner</h3>
+                        <p>Use Wanderlog to map your journey to figure out the best routes, keep track of hotel and flight bookings and reservations, and read guides from other trip planning websites.</p>
+                    </div>
+                    <div className="item-text-footer">
+                        <h3>The best group itinerary planner</h3>
+                        <p>Use Wanderlog to share your itinerary with tripmates, friends, and families and collaborate in real time, so everyone stays in the loop.</p>
+                    </div>
+                </div>
+                <div className="router-footer">
+                    <div className="router-footer-main">
+                        <div className="router-footer-item">
+                            <div onClick={() => navigate('/')} className="flex items-center gap-1 cursor-pointer">
+                                <img className="w-[60px] h-[60px]" src="https://wanderlog.com/assets/logo.png" alt="" />
+                                <h1 className="text-red-500 font-semibold">Wanderlog</h1>
+                            </div>
+                            <div className="router-footer-icon">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <a>280 Hoang Quoc Viet,Co Nhue,Nam Tu Niem,Ha Noi</a>
+                            </div>
+                            <div className="router-footer-icon">
+                                <i class="fa-solid fa-phone"></i>
+                                <a>+ 123456789</a>
+                            </div>
+                            <div className="router-footer-icon">
+                                <i class="fa-solid fa-envelope"></i>
+                                <a href="">aptech.edu.vn</a>
+                            </div>
+                        </div>
+                        <div className="router-footer-item">
+                            <h2>Menu</h2>
+                            <div className="focus-footer">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                <a href="/home">Home</a>
+                            </div>
+                            <div className="focus-footer">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                <a href="/about">About</a>
+                            </div>
+                            <div className="focus-footer">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                <a href="/contact">Contact</a>
+                            </div>
+                            <div className="focus-footer">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                <a href="/library">Library</a>
+                            </div>
+
+                        </div>
+                        <div className="router-footer-item">
+                            <h2>Folows Us</h2>
+                            <div className="item-media-footer">
+                                <input placeholder="Enter your email ..."></input>
+                                <div className="icon-item-media">
+                                    <i class="fa-regular fa-paper-plane"></i>
+                                </div>
+                            </div>
+                            <div className="item-icon-media">
+                                <i class="fa-brands fa-facebook"></i>
+                                <i class="fa-brands fa-instagram"></i>
+                                <i class="fa-brands fa-youtube"></i>
+                                <i class="fa-brands fa-square-twitter"></i>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
     </div>
 
 }

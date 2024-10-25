@@ -23,6 +23,7 @@ import {BASE_URL} from "@/src/libs/consts.js";
 import {Locations} from "@components/Location.jsx";
 import {imageList} from "@components/RecentlyViewed.jsx";
 import {Alert, AlertDescription, AlertTitle} from "@components/ui/alert.jsx";
+import HereMap from "@/src/pages/HereMap.jsx";
 
 /*
 trip {
@@ -96,7 +97,7 @@ export const TripDetail = () => {
 
 
     return <div className="flex justify-between h-[100dvh] ">
-        <div className="w-[60%] min-h-screen" style={{boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
+        <div className="md:w-[60%] w-full min-h-screen" style={{boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px"}}>
             <TripSide>
                 <div className="w-full relative" id="overview">
                     <img className="w-full h-[250px] object-cover object-center"
@@ -263,11 +264,12 @@ export const TripDetail = () => {
             </TripSide>
 
         </div>
-        <div className="relative w-[39.7%]">
+        <div className="relative w-[39.7%] md:block hidden">
             <div>
-                <iframe className="w-full h-screen" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-                        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
-                    <a href="https://www.gps.ie/">gps tracker sport</a></iframe>
+                {/*<iframe className="w-full h-screen" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"*/}
+                {/*        src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">*/}
+                {/*    <a href="https://www.gps.ie/">gps tracker sport</a></iframe>*/}
+                <HereMap />
             </div>
         </div>
     </div>

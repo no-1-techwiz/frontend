@@ -67,7 +67,8 @@ import {useSensors, useSensor, PointerSensor, KeyboardSensor, DndContext} from "
 import {arrayMove, SortableContext, sortableKeyboardCoordinates, useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
 
-const locationImg = ['https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/kp5QNAKQeJAT9REQlIJpPFe7U2oMOqEU', 'https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/d0EPJLXPz2br62LzvSQqCRRF5CVpJIen', 'https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/NfgVw53IRUBHfadVefJQirS1KZ7zhaKe', "https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D"]
+const locationImg = ['https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/kp5QNAKQeJAT9REQlIJpPFe7U2oMOqEU', 'https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/d0EPJLXPz2br62LzvSQqCRRF5CVpJIen', 'https://itin-dev.sfo2.cdn.digitaloceanspaces.com/freeImage80/NfgVw53IRUBHfadVefJQirS1KZ7zhaKe', "https://images.unsplash.com/photo-1726808260756-ec1d4eceaf71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D",
+"https://images.unsplash.com/photo-1729628452924-aeea6202646a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyNXx8fGVufDB8fHx8fA%3D%3D","https://images.unsplash.com/photo-1729614140529-1d9a389403fe?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzNnx8fGVufDB8fHx8fA%3D%3D","https://images.unsplash.com/photo-1728229395358-f1182a1e6d10?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0MHx8fGVufDB8fHx8fA%3D%3D"]
 
 export const Locations = ({trip, user, setTotal}) => {
 
@@ -101,7 +102,7 @@ export const Locations = ({trip, user, setTotal}) => {
         try {
             const locationTemplate = await axios.get(`${BASE_URL}/location-templates`)
             const location = await axios.get(`${BASE_URL}/locations`)
-            setLocationTemplate(locationTemplate.data)
+            setLocationTemplate(locationTemplate.data.map(item => ({...item, image: locationImg[Math.floor(Math.random() * locationImg.length)]})))
             setLocation(location.data.map(item => {
                 return {...item, image: locationImg[Math.floor(Math.random() * locationImg.length)]}
             }))
@@ -133,7 +134,6 @@ export const Locations = ({trip, user, setTotal}) => {
         setLocationSearch(notOwnedLocation.filter(item => item.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())))
     }, [debouncedSearchTerm]);
 
-    console.log("ownedLocation",ownedLocation)
 
     return <div className="mt-6">
 
@@ -178,7 +178,8 @@ export const Locations = ({trip, user, setTotal}) => {
                 <SortableContext items={ownedLocation}>
                     <div className="flex flex-col gap-3">
                         {ownedLocation.map((item, index) => {
-                            return <LocationBox isOwn trip={trip} item={item.location_template} image={item.image} locationId={item.id}
+                            return <LocationBox isOwn trip={trip} item={item.location_template} image={item.image}
+                                                locationId={item.id}
                                                 index={index} total={total} user={user} fetch={fetchLocation}/>
                         })}
                     </div>
@@ -195,7 +196,7 @@ export const Locations = ({trip, user, setTotal}) => {
                     <div className="flex flex-col gap-3">
                         {notOwnedLocation.map((item, index) => {
                             return <LocationBox trip={trip} item={item} index={index} total={total} user={user}
-                                                fetch={fetchLocation}/>
+                                                fetch={fetchLocation} image={item.image}/>
                         })}
                     </div>
                 </AccordionContent>
@@ -213,7 +214,6 @@ const LocationBox = ({item, index, trip, isOwn, total, user, fetch, locationId, 
     const [expense, setExpense] = useState(0)
     const [open, setOpen] = useState(false)
     const randomImg = useMemo(() => Math.floor(Math.random() * locationImg.length), [])
-
 
 
     const initFetch = async () => {
@@ -240,22 +240,21 @@ const LocationBox = ({item, index, trip, isOwn, total, user, fetch, locationId, 
     } = useSortable({id: locationId});
 
     const style = {
-        opacity: isDragging ? 0.4 : undefined,
-        transform: CSS.Translate.toString(transform),
-        transition
+        opacity: isDragging ? 0.4 : undefined, transform: CSS.Translate.toString(transform), transition
     };
 
-    console.log("item",item)
+    console.log("item", item)
 
     if (!isOwn && index > 2) return
     return <>
         <div
-            style={style}
+            style={isOwn ? style : {}}
             ref={setNodeRef}
             key={index}
             className="flex justify-between items-center gap-4 p-2  border-gray-200 rounded-xl overflow-hidden border-2 gap-20">
             <div className="flex gap-2 items-center">
-                <Button {...attributes} {...listeners} ref={setActivatorNodeRef} variant="secondary"># {index + 1}</Button>
+                {isOwn && <Button {...attributes} {...listeners} ref={setActivatorNodeRef}
+                                  variant="secondary"># {index + 1}</Button>}
                 <img className="w-[50px] object-cover flex-1 rounded-lg h-[70px]"
                      src={image}
                      alt=""/>
@@ -326,7 +325,7 @@ const LocationBox = ({item, index, trip, isOwn, total, user, fetch, locationId, 
                                             cost: price, location_id: res.data.id,
                                         })
                                         localStorage.setItem(`price:${user.id}:${res.data.id}`, price.toString())
-                                        toast("Added location", {type: "success"})
+                                        // toast("Added location", {type: "success"})
                                         setPrice(0)
                                         fetch()
                                         setOpen(false)
